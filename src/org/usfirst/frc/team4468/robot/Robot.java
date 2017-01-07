@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team4468.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -12,5 +11,12 @@ import edu.wpi.first.wpilibj.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
+	public void robotInit(){
+		CMap.initialize();
+	}
+	
+	public void autonomousInit(){
+		
+	}
+	
 }
