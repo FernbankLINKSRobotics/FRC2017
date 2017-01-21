@@ -25,7 +25,7 @@ public class turnPID extends PIDSubsystem {
     
     protected double returnPIDInput() {
     	
-    	return 0;
+    	return CMap.gyro.pidGet();
     }
     
     protected void usePIDOutput(double output) {

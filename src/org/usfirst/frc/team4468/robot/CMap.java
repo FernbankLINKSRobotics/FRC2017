@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4468.robot;
 import drive.DriveTrain;
+import com.kauailabs.navx.frc.AHRS;
 import drive.GearShift;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -18,6 +19,8 @@ public class CMap {
 	public static Encoder leftEncoder,
 							rightEncoder,
 							shooterEncoder;
+	
+	public static AHRS gyro;
 	
 	//Joysticks
 	public static Joystick leftStick, rightStick, auxStick;
@@ -57,6 +60,9 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(drive.highPulsePerRevolution);
+		
+		gyro = new AHRS(SerialPort.Port.kUSB1);
+		gyro.reset();
 		//BTW, k4x tells the encoder to count the rising and falling edges
 		
 		//Pnumatics

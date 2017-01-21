@@ -66,7 +66,7 @@ public class Gear {
 				//Drop the Gear
 			}
 		} else if(which == 3){
-			if(!initialStraight){
+			if(!initialStraight){ 
 				CMap.drive.driveForward(distanceToLift); //Drive Forward
 				if(CMap.drive.onTarget()){ //If we have reached the setpoint
 					initialStraight = true; //Disable the PID Loops
