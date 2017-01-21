@@ -9,7 +9,8 @@ import gears.GearSubsystem;
 import shooter.ShooterSubsystem;
 import vision.visionSubsystem;
 import PIDsub.*;
-public class CMap {
+public class CMap { 
+	public static DriverStation station;
 	//Motors
 	public static VictorSP leftDrive,
 							rightDrive,
