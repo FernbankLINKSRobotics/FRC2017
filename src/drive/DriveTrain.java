@@ -29,7 +29,7 @@ public class DriveTrain {
 	
 	//Encoder Values
 	public static final double lowDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution/encoderGearRatio/gearRatio * FudgeFactor;
-	public static final double highPulsePerRevolution = Math.PI*wheelDiameter/pulsePerRevolution/encoderGearRatio/gearRatio * FudgeFactor;
+	public static final double highDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution/encoderGearRatio/gearRatio * FudgeFactor;
 	
 	/**
 	 * Public Constructor for the Drivetrain class. This initializes

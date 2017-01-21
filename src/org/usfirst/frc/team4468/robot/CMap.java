@@ -44,6 +44,8 @@ public class CMap {
 	public static GearShift shift;
 	
 	public static void initialize(){
+		station = DriverStation.getInstance();
+		
 		//Motors
 		leftDrive = new VictorSP(0);
 		rightDrive = new VictorSP(1);
@@ -59,10 +61,12 @@ public class CMap {
 		shooterEncoder.reset();
 		
 		leftEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
-		rightEncoder.setDistancePerPulse(drive.highPulsePerRevolution);
+		rightEncoder.setDistancePerPulse(drive.highDistancePerPulse);
 		
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
+		
+		
 		//BTW, k4x tells the encoder to count the rising and falling edges
 		
 		//Pnumatics
@@ -93,6 +97,6 @@ public class CMap {
 		
 		vision = new visionSubsystem("LINKSVision");
 		
-		
+		System.out.println("Robot is Initialize");
 	}
 }
