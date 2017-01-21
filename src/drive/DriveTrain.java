@@ -1,5 +1,8 @@
 package drive;
 
+import org.usfirst.frc.team4468.robot.CMap;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -13,6 +16,20 @@ public class DriveTrain {
 	 * The motor controller responsible for the right drive motor.
 	 */
 	public SpeedController rightDrive;
+	
+	public GearShift shiftSubsystem = null;
+	
+	
+	public static final double wheelDiameter = 0; //inches
+	public static final double pulsePerRevolution = 256;
+	public static final double encoderGearRatio = 0; //Gear Ratio of Shaft the Encoder is On
+	public static final double gearRatio = 0; //Gear Ratio of Motor
+	public static final double FudgeFactor = 1;
+	
+	
+	//Encoder Values
+	public static final double lowDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution/encoderGearRatio/gearRatio * FudgeFactor;
+	public static final double highPulsePerRevolution = Math.PI*wheelDiameter/pulsePerRevolution/encoderGearRatio/gearRatio * FudgeFactor;
 	
 	/**
 	 * Public Constructor for the Drivetrain class. This initializes
@@ -29,6 +46,21 @@ public class DriveTrain {
 	public DriveTrain(SpeedController leftDriveMotor, SpeedController rightDriveMotor){
 		leftDrive = leftDriveMotor;
 		rightDrive = rightDriveMotor;
+	}
+	
+	public void main(boolean forwardButton){
+		if(forwardButton){
+			this.set(1);
+		} else {
+			this.set(CMap.leftStick.getY(), CMap.rightStick.getY());
+			if(this.shiftSubsystem != null){
+				this.shiftSubsystem.shift();
+			}
+		}
+	}
+	
+	public void addGearShift(GearShift shift){
+		this.shiftSubsystem = shift;
 	}
 	
 	/**
@@ -71,22 +103,6 @@ public class DriveTrain {
 		leftDrive.set(leftValue);
 		rightDrive.set(rightValue);
 	}
-	
-	/**
-	 * This method can be used to set the motor values with joysticks. This
-	 * calls the getY() function, so any inverting should be done before
-	 * this function is called.
-	 * 
-	 * @param leftStick
-	 * The joystick responsible for the left side of the drivetrain.
-	 * @param rightStick
-	 * The joystick responsible for the right side of the drivetrain.
-	 */
-	public void set(Joystick leftStick, Joystick rightStick){
-		leftDrive.set(leftStick.getY());
-		rightDrive.set(rightStick.getY());
-	}
-	
 	/**
 	 * This method can be used in conjunction with drivetrain PID systems.
 	 * It will set the values of the motors to opposites to ensure turning.
@@ -95,5 +111,32 @@ public class DriveTrain {
 	public void turnSet(double value){
 		leftDrive.set(value);
 		rightDrive.set(-value);
+	}
+	
+	/**
+	 * PID Drive Forward
+	 * @param setpoint
+	 */
+	public void driveForward(double setpoint){
+		CMap.leftPID.getPIDController().setSetpoint(setpoint);
+		CMap.rightPID.getPIDController().setSetpoint(setpoint);
+	}
+	
+	public boolean onTarget(){
+		if(CMap.leftPID.onTarget() && CMap.rightPID.onTarget()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void disablePID(){
+		CMap.leftPID.getPIDController().disable();
+		CMap.rightPID.getPIDController().disable();
+	}
+	
+	public void enablePID(){
+		CMap.leftPID.getPIDController().enable();
+		CMap.rightPID.getPIDController().enable();
 	}
 }

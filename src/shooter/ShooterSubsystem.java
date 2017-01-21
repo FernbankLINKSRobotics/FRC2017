@@ -20,7 +20,6 @@ public class ShooterSubsystem {
 	
 	
 	public static void set(Joystick stick){
-		
 		if(stick.getTrigger()){
 			if(!beenPressed ){
 				if(shooter.get() == 0){
@@ -32,5 +31,7 @@ public class ShooterSubsystem {
 			}
 		}
 	}
+	
+	
 	
 }

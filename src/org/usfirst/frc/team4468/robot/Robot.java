@@ -19,4 +19,12 @@ public class Robot extends IterativeRobot {
 		
 	}
 	
+	public void teleopInit(){
+		
+	}
+	
+	public void teleopPeriodic(){
+		CMap.drive.main(CMap.leftStick.getTrigger());
+	}
+	
 }
