@@ -29,6 +29,7 @@ public class Gear {
 				if(CMap.drive.onTarget()){ //If we have reached the setpoint
 					drivenUp = true; //Disable the PID Loops
 					CMap.drive.disablePID();
+					System.out.println("Reached center gear lift.");
 				}
 			} else if(!droppedGear){ //Drop the Gear
 				
@@ -43,15 +44,19 @@ public class Gear {
 				if(CMap.drive.onTarget()){ //If we have reached the setpoint
 					initialStraight = true; //Disable the PID Loops
 					CMap.drive.disablePID();
+					System.out.println("About to start turning.");
 				}
 			} else if(!turnedToSide){
 				if(!CMap.turnController.getPIDController().isEnabled()){
 					CMap.turnController.getPIDController().enable(); //Enable the Turn Controller
 					CMap.turnController.getPIDController().setSetpoint(angle);
+					System.out.println("Starting the turn.");
 				}
 				
 				if(CMap.turnController.onTarget()){
+					CMap.turnController.getPIDController().disable();
 					turnedToSide= true;
+					System.out.println("Lined up with gear lift.");
 				}
 			} else if(!drivenUp){
 				CMap.drive.enablePID();
@@ -61,6 +66,7 @@ public class Gear {
 				if(CMap.drive.onTarget()){ //If we have reached the setpoint
 					drivenUp = true; //Disable the PID Loops
 					CMap.drive.disablePID();
+					System.out.println("At gear lift.");
 				}
 			} else if(!droppedGear){
 				//Drop the Gear
@@ -71,15 +77,19 @@ public class Gear {
 				if(CMap.drive.onTarget()){ //If we have reached the setpoint
 					initialStraight = true; //Disable the PID Loops
 					CMap.drive.disablePID();
+					System.out.println("About to start turning.");
 				}
 			} else if(!turnedToSide){
 				if(!CMap.turnController.getPIDController().isEnabled()){
 					CMap.turnController.getPIDController().enable(); //Enable the Turn Controller
 					CMap.turnController.getPIDController().setSetpoint(angle);
+					System.out.println("Starting the turn.");
 				}
 				
 				if(CMap.turnController.onTarget()){
+					CMap.turnController.getPIDController().disable();
 					turnedToSide= true;
+					System.out.println("Lined up with gear lift.");
 				}
 			} else if(!drivenUp){
 				CMap.drive.enablePID();
@@ -89,6 +99,7 @@ public class Gear {
 				if(CMap.drive.onTarget()){ //If we have reached the setpoint
 					drivenUp = true; //Disable the PID Loops
 					CMap.drive.disablePID();
+					System.out.println("At gear lift.");
 				}
 			} else if(!droppedGear){
 				//Drop the Gear

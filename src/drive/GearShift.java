@@ -26,10 +26,12 @@ public class GearShift {
 			if(!buttonBeenPressed){
 				if(state == "Low"){
 					state = "High";
+				
 				} else {
 					state = "Low";
 				}
 				buttonBeenPressed = true;
+				System.out.println("Gears shifted to " + state + ".");
 			}
 		} else {
 			buttonBeenPressed = false;

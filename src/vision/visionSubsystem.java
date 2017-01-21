@@ -51,6 +51,7 @@ public class visionSubsystem {
 		while(!connectedToRaspberry){
 			connectedToRaspberry = visionTable.getBoolean("Online?", false);
 		}
+		System.out.println("Connected to Raspberry Pi.");
 	}
 	
 	/**
@@ -68,6 +69,7 @@ public class visionSubsystem {
 		while(!connectedToRaspberry){
 			connectedToRaspberry = visionTable.getBoolean("Online?", false);
 		}
+		System.out.println("Connected to Raspberry Pi.");
 	}
 	
 	/**
