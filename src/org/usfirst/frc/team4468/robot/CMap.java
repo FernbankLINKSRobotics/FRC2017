@@ -31,6 +31,7 @@ public class CMap {
 	public static leftDrive leftPID;
 	public static rightDrive rightPID;
 	public static turnPID turnController;
+	public static ShooterPID shooterPID;
 	
 	//Regular Subsystems
 	public static DriveTrain drive;
@@ -73,6 +74,7 @@ public class CMap {
 		leftPID = new leftDrive();
 		rightPID = new rightDrive();
 		turnController = new turnPID();
+		shooterPID = new ShooterPID();
 		
 		turnController.getPIDController().disable();
 		

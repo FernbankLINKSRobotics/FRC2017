@@ -7,26 +7,26 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class ShooterSubsystem {
 
 	//motor controller for shooter
-	public static SpeedController shooter;
+	public  SpeedController shooterMotor;
 
-	private static boolean beenPressed = false;
+	private  boolean beenPressed = false;
 	
 	public Encoder encoder;
 	
-	public ShooterSubsystem(SpeedController shooterMotor, Encoder encoder1){
-		shooter = shooterMotor;
+	public ShooterSubsystem(SpeedController shooterMotor1, Encoder encoder1){
+		shooterMotor = shooterMotor1;
 		encoder = encoder1;
 	}
 	
 	
-	public static void set(Joystick stick){
+	public  void set(Joystick stick){
 		if(stick.getTrigger()){
 			if(!beenPressed ){
-				if(shooter.get() == 0){
-					shooter.set(1);	
+				if(shooterMotor.get() == 0){
+					shooterMotor.set(1);	
 				}
 				else{
-					shooter.set(0);
+					shooterMotor.set(0);
 				}
 			}
 		}
