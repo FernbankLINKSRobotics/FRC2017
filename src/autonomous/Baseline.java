@@ -3,7 +3,7 @@ package autonomous;
 import org.usfirst.frc.team4468.robot.CMap;
 
 public class Baseline {
-	public static void Main() {
+	public static void main() {
 		CMap.drive.enablePID();
 		//7 ft 9.25 inches
 		CMap.leftPID.setSetpoint(100);

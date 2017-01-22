@@ -1,6 +1,8 @@
 package autonomous;
 import org.usfirst.frc.team4468.robot.*;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class Gear {
 	/*
 	 * STEPS IN AUTONOMOUS:
@@ -11,15 +13,16 @@ public class Gear {
 	 * 4. Drop Gear
 	 */
 	
-	boolean initialStraight = false;
-	boolean turnedToSide = false;
-	boolean drivenUp = false;
-	boolean droppedGear = false;
+	static boolean initialStraight = false;
+	static boolean turnedToSide = false;
+	static boolean drivenUp = false;
+	static boolean droppedGear = false;
 	
-	double distanceToLift;
-	double angle;
+	static double distanceToLift;
+	static double angle;
 	
-	public void main(int which){
+	Timer gearTimer = new Timer();
+	public static void main(int which){
 		if(which == 1 || which == 3){ //If any of the goals are on the sides
 			driveToSide(which); //See method
 		} else if(which == 2){ //If we are going to the center goal
@@ -32,12 +35,13 @@ public class Gear {
 					System.out.println("Reached center gear lift.");
 				}
 			} else if(!droppedGear){ //Drop the Gear
-				
+				CMap.gears.depositGear(true);
+				droppedGear = true;
 			}
 		}
 	}
 	
-	public void driveToSide(int which){
+	public static void driveToSide(int which){
 		if(which == 1){
 			if(!initialStraight){ //Initial Straight Drive
 				CMap.drive.driveForward(distanceToLift); //Drive Forward
@@ -69,7 +73,8 @@ public class Gear {
 					System.out.println("At gear lift.");
 				}
 			} else if(!droppedGear){
-				//Drop the Gear
+				CMap.gears.depositGear(true);
+				droppedGear = true;
 			}
 		} else if(which == 3){
 			if(!initialStraight){ 
@@ -102,7 +107,8 @@ public class Gear {
 					System.out.println("At gear lift.");
 				}
 			} else if(!droppedGear){
-				//Drop the Gear
+				CMap.gears.depositGear(true);
+				droppedGear = true;
 			}
 		}
 	}

@@ -48,8 +48,8 @@ public class DriveTrain {
 		rightDrive = rightDriveMotor;
 	}
 	
-	public void main(boolean forwardButton){
-		if(forwardButton){
+	public void main(){
+		if(CMap.leftStick.getTrigger()){
 			this.set(1);
 		} else {
 			this.set(CMap.leftStick.getY(), CMap.rightStick.getY());
@@ -122,6 +122,8 @@ public class DriveTrain {
 		CMap.rightPID.getPIDController().setSetpoint(setpoint);
 	}
 	
+	
+	//
 	public boolean onTarget(){
 		if(CMap.leftPID.onTarget() && CMap.rightPID.onTarget()){
 			return true;

@@ -9,12 +9,9 @@ import gears.GearSubsystem;
 import shooter.ShooterSubsystem;
 import vision.visionSubsystem;
 import PIDsub.*;
+import climber.ClimbSubsystem;
 public class CMap { 
 	public static DriverStation station;
-	//Motors
-	public static VictorSP leftDrive,
-							rightDrive,
-							shooterMotor;
 	
 	//Encoders
 	public static Encoder leftEncoder,
@@ -28,8 +25,6 @@ public class CMap {
 	
 	//Pnumatics
 	public static Compressor compressor;
-	public static DoubleSolenoid leftShift,
-								rightShift;
 	
 	//PID Subsystems
 	public static leftDrive leftPID;
@@ -43,14 +38,10 @@ public class CMap {
 	public static ShooterSubsystem shooter;
 	public static GearSubsystem gears;
 	public static GearShift shift;
+	public static ClimbSubsystem climber;
 	
 	public static void initialize(){
 		station = DriverStation.getInstance();
-		
-		//Motors
-		leftDrive = new VictorSP(0);
-		rightDrive = new VictorSP(1);
-		shooterMotor = new VictorSP(2);
 		
 		//Encoders
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
@@ -62,7 +53,7 @@ public class CMap {
 		shooterEncoder.reset();
 		
 		leftEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
-		rightEncoder.setDistancePerPulse(drive.highDistancePerPulse);
+		rightEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
 		
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
@@ -72,9 +63,6 @@ public class CMap {
 		
 		//Pnumatics
 		compressor = new Compressor();
-		leftShift = new DoubleSolenoid(0, 1);
-		rightShift = new DoubleSolenoid(2, 3);
-		
 		
 		//Joysticks
 		leftStick = new Joystick(0);
@@ -90,14 +78,15 @@ public class CMap {
 		turnController.getPIDController().disable();
 		
 		//Subsystems
-		drive = new DriveTrain(leftDrive, rightDrive);
-		shift = new GearShift(drive, leftShift, rightShift, rightStick);
+		drive = new DriveTrain(new VictorSP(0), new VictorSP(1));
+		shift = new GearShift(drive, new DoubleSolenoid(0, 1), new DoubleSolenoid(2, 3), rightStick);
 		drive.addGearShift(shift);
 		
-		shooter = new ShooterSubsystem(shooterMotor, shooterEncoder);
+		gears = new GearSubsystem(new VictorSP(3), new VictorSP(4), new DoubleSolenoid(4, 5));
+		climber = new ClimbSubsystem(new VictorSP(2), new DigitalOutput(0), new Relay(0));
 		
 		vision = new visionSubsystem("LINKSVision");
 		
-		System.out.println("Robot is Initialize");
+		System.out.println("Robot is Initialized");
 	}
 }
