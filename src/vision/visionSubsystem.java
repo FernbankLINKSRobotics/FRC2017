@@ -113,11 +113,11 @@ public class visionSubsystem {
 	 * The target angles in an array of (x, y). This should be added to the current
 	 * PID setpoint.
 	 */
-	public double[] getGyroAngle(double[] offsets){
-		double targetX = offsets[0] * columnDegreesPerPixel;
-		double targetY = offsets[1] * rowDegreesPerPixel;
-		double[] targetAngles = {targetX, targetY};
-		return targetAngles;
+	public double getGyroAngle(){
+		double xOffset = this.getOffsets()[0];
+		double targetX = xOffset * columnDegreesPerPixel;
+		//double targetY = offsets[1] * rowDegreesPerPixel;
+		return targetX;
 	}
 	
 	public boolean checkConnection(){

@@ -21,8 +21,11 @@ public class Gear {
 	static double distanceToLift;
 	static double angle;
 	
+	static double zeroGyroAngle = -999;
+	
 	Timer gearTimer = new Timer();
 	public static void main(int which){
+		
 		if(which == 1 || which == 3){ //If any of the goals are on the sides
 			driveToSide(which); //See method
 		} else if(which == 2){ //If we are going to the center goal
@@ -51,11 +54,29 @@ public class Gear {
 					System.out.println("About to start turning.");
 				}
 			} else if(!turnedToSide){
+				//Might not need if statement
 				if(!CMap.turnController.getPIDController().isEnabled()){
 					CMap.turnController.getPIDController().enable(); //Enable the Turn Controller
-					CMap.turnController.getPIDController().setSetpoint(angle);
+					zeroGyroAngle = CMap.turnController.getPosition();
 					System.out.println("Starting the turn.");
+					
 				}
+				
+				/*
+				 * So, let me explain the zero Gyro Angle. Odds are that by the time we reach
+				 * the end of the initial drive, we will already have changed our heading from
+				 * 0 degrees. As a result, we need to compensate for that. My idea is that before
+				 * we start the turn, we will get the current heading and store that as a zero. We
+				 * could reset the gyro using its reset() method, but that might invoke the calibration method.
+				 * 
+				 * So, the current heading is stored as zeroGyroAngle and we add/subtract the vision angle to that
+				 * heading and set that as the setpoint. This allows us to dynamically change the setpoint
+				 * as the vision continues to change its gyro heading.
+				 *
+				 */
+				CMap.turnController.getPIDController().setSetpoint(zeroGyroAngle + CMap.vision.getGyroAngle());
+				
+				
 				
 				if(CMap.turnController.onTarget()){
 					CMap.turnController.getPIDController().disable();
