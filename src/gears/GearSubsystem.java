@@ -39,6 +39,7 @@ public class GearSubsystem {
 				if(leftMotor.get() != 0){
 					leftMotor.set(1); //Set the Rollers to INtake the Gear
 					rightMotor.set(-1);
+					System.out.println("The rollers have been activated.");
 				} else {
 					leftMotor.set(0); //Set the Rollers to do nothing
 					rightMotor.set(0);
@@ -46,6 +47,7 @@ public class GearSubsystem {
 			}
 			intakeButtonBeenPressed = true;
 			cylinders.set(Value.kForward); //Clamp on the Gear
+			System.out.println("The gear has been clamped.");
 		} else {
 			intakeButtonBeenPressed = false;
 		}
@@ -54,6 +56,7 @@ public class GearSubsystem {
 	public void depositGear(boolean button){
 		if(button){
 			cylinders.set(Value.kReverse); //Let go of the gear
+			System.out.println("The gears have been let go.");
 		}
 	}
 	

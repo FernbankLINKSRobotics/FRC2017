@@ -37,6 +37,7 @@ public class Gear {
 			} else if(!droppedGear){ //Drop the Gear
 				CMap.gears.depositGear(true);
 				droppedGear = true;
+				System.out.println("The gear has been dropped.");
 			}
 		}
 	}
@@ -75,6 +76,7 @@ public class Gear {
 			} else if(!droppedGear){
 				CMap.gears.depositGear(true);
 				droppedGear = true;
+				System.out.println("The gear has been dropped.");
 			}
 		} else if(which == 3){
 			if(!initialStraight){ 
@@ -109,6 +111,7 @@ public class Gear {
 			} else if(!droppedGear){
 				CMap.gears.depositGear(true);
 				droppedGear = true;
+				System.out.println("The gear has been dropped.");
 			}
 		}
 	}
