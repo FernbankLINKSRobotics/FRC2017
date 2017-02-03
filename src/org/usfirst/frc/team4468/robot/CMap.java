@@ -45,7 +45,7 @@ public class CMap {
 		station = DriverStation.getInstance();
 		
 		//Encoders
-		/*
+		
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		shooterEncoder = new Encoder(4, 5, false, EncodingType.k4X);
@@ -59,7 +59,7 @@ public class CMap {
 		
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
-		*/
+		
 		
 		//BTW, k4x tells the encoder to count the rising and falling edges
 		
@@ -86,7 +86,7 @@ public class CMap {
 		//gears = new GearSubsystem(new VictorSP(3), new VictorSP(4), new DoubleSolenoid(4, 5));
 		//climber = new ClimbSubsystem(new VictorSP(2), new DigitalOutput(0), new Relay(0));
 		
-		//vision = new visionSubsystem("LINKSVision");
+		vision = new visionSubsystem("LINKSVision");
 		
 		System.out.println("Robot is Initialized");
 	}

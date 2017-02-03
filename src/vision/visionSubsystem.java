@@ -2,6 +2,7 @@ package vision;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -30,6 +31,8 @@ public class visionSubsystem {
 	public static final double rowDegreesPerPixel = horizontalFOV / rows;
 	public static final double[] centerOfCamera = {(columns / 2), (rows / 2)};
 	
+	public Timer startUpTimer = new Timer();
+	
 	/**
 	 * Constructor for the visonSubsystem class
 	 * 
@@ -44,14 +47,24 @@ public class visionSubsystem {
 	 * 
 	 */
 	public visionSubsystem(double goodX, double goodY, String tableName){
+		startUpTimer.start(); //Starts the Timer. If we don't connect within 15 seconds, no vision for this match
 		idealX = goodX;
 		idealY = goodY;
 		visionTable = NetworkTable.getTable(tableName);
+		
 		connectedToRaspberry = visionTable.getBoolean("Online?", false);
 		while(!connectedToRaspberry){
 			connectedToRaspberry = visionTable.getBoolean("Online?", false);
+			if(!connectedToRaspberry && startUpTimer.get() >= 15){
+				System.out.println("Failed to Connect to Raspberry Pi"); //Let us Know
+				startUpTimer.reset();
+				break; //Exit the Loop
+			}
 		}
-		System.out.println("Connected to Raspberry Pi.");
+		if(connectedToRaspberry){
+			System.out.println("Connected to Raspberry Pi.");
+		}
+		
 	}
 	
 	/**
@@ -65,11 +78,19 @@ public class visionSubsystem {
 		idealX = centerOfCamera[0];
 		idealY = centerOfCamera[1];
 		visionTable = NetworkTable.getTable(tableName);
-		connectedToRaspberry = visionTable.getBoolean("Online?", false);
 		while(!connectedToRaspberry){
 			connectedToRaspberry = visionTable.getBoolean("Online?", false);
+			
+			if(!connectedToRaspberry && startUpTimer.get() >= 15){ //If
+				System.out.println("Failed to Connect to Raspberry Pi"); //Let us Know
+				startUpTimer.reset();
+				break; //Exit the Loop
+			}
+			
 		}
-		System.out.println("Connected to Raspberry Pi.");
+		if(connectedToRaspberry){
+			System.out.println("Connected to Raspberry Pi.");
+		}
 	}
 	
 	/**
