@@ -10,16 +10,21 @@ public class GearSubsystem {
 	public SpeedController leftMotor = null,
 						   rightMotor = null;
 	
-	public DoubleSolenoid cylinders = null;
+	public DoubleSolenoid wings = null,
+						  claw = null;
 	
-	private boolean dropButtonBeenPressed = false,
-					intakeButtonBeenPressed = false;
+	public String wingState = "Up";
+	
+	private boolean intakeButtonBeenPressed = false;
+	
+	
 	
 
-	public GearSubsystem(SpeedController leftRoller, SpeedController rightRoller, DoubleSolenoid cylinder){
+	public GearSubsystem(SpeedController leftRoller, SpeedController rightRoller, DoubleSolenoid wingsCylinder, DoubleSolenoid clawMotor){
 		leftMotor = leftRoller;
 		rightMotor = rightRoller;
-		cylinders = cylinder;
+		wings = wingsCylinder;
+		claw = clawMotor;
 	}
 	
 	/* Expelling Gears
@@ -31,29 +36,42 @@ public class GearSubsystem {
 	public void main(){
 		intakeGear(CMap.auxStick.getRawButton(3));
 		depositGear(CMap.auxStick.getTrigger());
+		adjustWings(wingState);
+		
 	}
 	
 	public void intakeGear(boolean button){
 		if(button){
 			if(!intakeButtonBeenPressed){
-				if(leftMotor.get() != 0){
-					leftMotor.set(1); //Set the Rollers to INtake the Gear
-					rightMotor.set(-1);
+				if(wingState == "Up"){
+					wingState = "Down";
 				} else {
-					leftMotor.set(0); //Set the Rollers to do nothing
-					rightMotor.set(0);
+					wingState = "Up";
 				}
+				intakeButtonBeenPressed = true;
 			}
-			intakeButtonBeenPressed = true;
-			cylinders.set(Value.kForward); //Clamp on the Gear
+			
 		} else {
 			intakeButtonBeenPressed = false;
 		}
+		
+	}
+	
+	public void adjustWings(String state){
+		if(state == "Up"){
+			wings.set(Value.kForward);
+		} else {
+			wings.set(Value.kForward);
+		}
+	}
+	
+	public void lowerRoller(){
+		
 	}
 	
 	public void depositGear(boolean button){
 		if(button){
-			cylinders.set(Value.kReverse); //Let go of the gear
+			wings.set(Value.kReverse); //Let go of the gear
 		}
 	}
 	

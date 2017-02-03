@@ -5,6 +5,7 @@ import drive.GearShift;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import gears.GearSubsystem;
 import shooter.ShooterSubsystem;
 import vision.visionSubsystem;
@@ -44,6 +45,7 @@ public class CMap {
 		station = DriverStation.getInstance();
 		
 		//Encoders
+		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		shooterEncoder = new Encoder(4, 5, false, EncodingType.k4X);
@@ -57,7 +59,7 @@ public class CMap {
 		
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
-		
+		*/
 		
 		//BTW, k4x tells the encoder to count the rising and falling edges
 		
@@ -70,23 +72,23 @@ public class CMap {
 		auxStick = new Joystick(2);
 		
 		//PID Subsystems
-		leftPID = new leftDrive();
-		rightPID = new rightDrive();
-		turnController = new turnPID();
-		shooterPID = new ShooterPID();
+		//leftPID = new leftDrive();
+		//rightPID = new rightDrive();
+		//turnController = new turnPID();
 		
 		turnController.getPIDController().disable();
 		
 		//Subsystems
 		drive = new DriveTrain(new VictorSP(0), new VictorSP(1));
-		shift = new GearShift(drive, new DoubleSolenoid(0, 1), new DoubleSolenoid(2, 3), rightStick);
-		drive.addGearShift(shift);
+		//shift = new GearShift(drive, new DoubleSolenoid(0, 1), new DoubleSolenoid(2, 3), leftStick.getTrigger());
+		//drive.addGearShift(shift);
 		
-		gears = new GearSubsystem(new VictorSP(3), new VictorSP(4), new DoubleSolenoid(4, 5));
-		climber = new ClimbSubsystem(new VictorSP(2), new DigitalOutput(0), new Relay(0));
+		//gears = new GearSubsystem(new VictorSP(3), new VictorSP(4), new DoubleSolenoid(4, 5));
+		//climber = new ClimbSubsystem(new VictorSP(2), new DigitalOutput(0), new Relay(0));
 		
-		vision = new visionSubsystem("LINKSVision");
+		//vision = new visionSubsystem("LINKSVision");
 		
 		System.out.println("Robot is Initialized");
 	}
+	
 }

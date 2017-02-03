@@ -10,13 +10,13 @@ import drive.*;
 public class GearShift {
 	public static DriveTrain drive;
 	public static DoubleSolenoid leftShift, rightShift;
-	public static Joystick shiftStick;
+	public static boolean shiftButton;
 	
 	public static String state;
 	private static boolean buttonBeenPressed = false;
 	
 	
-	public GearShift(DriveTrain drivetrain, DoubleSolenoid leftGearShift, DoubleSolenoid rightGearShift, Joystick shiftStick){
+	public GearShift(DriveTrain drivetrain, DoubleSolenoid leftGearShift, DoubleSolenoid rightGearShift, boolean button){
 		drive = drivetrain;
 		leftShift = leftGearShift;
 		rightShift = rightGearShift;
@@ -25,7 +25,7 @@ public class GearShift {
 	}
 	
 	public void shift(){
-		if(shiftStick.getTrigger()){
+		if(shiftButton){
 			if(!buttonBeenPressed){
 				if(state == "Low"){
 					state = "High";

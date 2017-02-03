@@ -78,7 +78,7 @@ public class Gear {
 				
 				
 				
-				if(CMap.turnController.onTarget()){
+				if(CMap.turnController.onTarget()){ //Just what the method says
 					CMap.turnController.getPIDController().disable();
 					turnedToSide= true;
 					System.out.println("Lined up with gear lift.");

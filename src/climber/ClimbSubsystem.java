@@ -21,7 +21,7 @@ public class ClimbSubsystem {
 	}
 	
 	public void main(){
-		climb(CMap.auxStick.getRawButton(8));
+		this.climb(CMap.auxStick.getRawButton(8));
 	}
 	
 	

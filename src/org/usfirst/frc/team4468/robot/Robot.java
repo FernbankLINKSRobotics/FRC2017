@@ -67,8 +67,8 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic(){
 		CMap.drive.main();
-		CMap.gears.main();
-		CMap.climber.main();
+		//CMap.gears.main();
+		//CMap.climber.main();
 	}
 	
 	public void testInit(){
