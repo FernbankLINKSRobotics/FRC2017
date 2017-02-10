@@ -43,6 +43,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousPeriodic(){
+		/*
 		switch(autonomous){
 		case "Gears Left":
 			Gear.main(1);
@@ -55,7 +56,7 @@ public class Robot extends IterativeRobot {
 			break;
 		default:
 			Baseline.main();
-		}
+		}*/
 		
 		
 	}
