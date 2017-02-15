@@ -5,13 +5,11 @@ import org.usfirst.frc.team4468.robot.CMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 
 public class GearSubsystem {
-	public SpeedController leftMotor = null,
-						   rightMotor = null;
 	
-	public DoubleSolenoid wings = null,
-						  claw = null;
+	public DoubleSolenoid intake = null;
 	
 	public String wingState = "Up";
 	
@@ -20,11 +18,8 @@ public class GearSubsystem {
 	
 	
 
-	public GearSubsystem(SpeedController leftRoller, SpeedController rightRoller, DoubleSolenoid wingsCylinder, DoubleSolenoid clawMotor){
-		leftMotor = leftRoller;
-		rightMotor = rightRoller;
-		wings = wingsCylinder;
-		claw = clawMotor;
+	public GearSubsystem(DoubleSolenoid solenoid){
+		intake = solenoid;
 	}
 	
 	/* Expelling Gears
@@ -34,34 +29,16 @@ public class GearSubsystem {
 	 * 3. Pancake Cylinders activate to clamp
 	 */
 	public void main(){
-		intakeGear(CMap.auxStick.getRawButton(3));
 		depositGear(CMap.auxStick.getTrigger());
 		adjustWings(wingState);
 		
 	}
 	
-	public void intakeGear(boolean button){
-		if(button){
-			if(!intakeButtonBeenPressed){
-				if(wingState == "Up"){
-					wingState = "Down";
-				} else {
-					wingState = "Up";
-				}
-				intakeButtonBeenPressed = true;
-			}
-			
-		} else {
-			intakeButtonBeenPressed = false;
-		}
-		
-	}
-	
 	public void adjustWings(String state){
 		if(state == "Up"){
-			wings.set(Value.kForward);
+			intake.set(Value.kForward);
 		} else {
-			wings.set(Value.kForward);
+			intake.set(Value.kForward);
 		}
 	}
 	
@@ -71,7 +48,7 @@ public class GearSubsystem {
 	
 	public void depositGear(boolean button){
 		if(button){
-			wings.set(Value.kReverse); //Let go of the gear
+			intake.set(Value.kReverse); //Let go of the gear
 		}
 	}
 	

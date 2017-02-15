@@ -4,18 +4,18 @@ import org.usfirst.frc.team4468.robot.CMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 
 public class DriveTrain {
 	/**
 	 * The motor controller responsible for the left drive motor.
 	 */
-	public SpeedController leftDrive;
+	public VictorSP leftDrive;
 	
 	/**
 	 * The motor controller responsible for the right drive motor.
 	 */
-	public SpeedController rightDrive;
+	public VictorSP rightDrive;
 	
 	public GearShift shiftSubsystem = null;
 	
@@ -43,7 +43,7 @@ public class DriveTrain {
 	 * @param rightDriveMotor
 	 * The motor responsible for the right side of the drivetrain.
 	 */
-	public DriveTrain(SpeedController leftDriveMotor, SpeedController rightDriveMotor){
+	public DriveTrain(VictorSP leftDriveMotor, VictorSP rightDriveMotor){
 		leftDrive = leftDriveMotor;
 		rightDrive = rightDriveMotor;
 	}
@@ -72,7 +72,7 @@ public class DriveTrain {
 	 * @param inverted
 	 * The inverted state to be set to. True will invert the motor, False will keep the motor in normal position.
 	 */
-	public void setInverted(SpeedController motor, boolean inverted){
+	public void setInverted(VictorSP motor, boolean inverted){
 		motor.setInverted(true);
 	}
 	
