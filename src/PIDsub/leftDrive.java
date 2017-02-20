@@ -1,5 +1,7 @@
 package PIDsub;
 
+import org.usfirst.frc.team4468.robot.CMap;
+
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
@@ -30,5 +32,6 @@ public class leftDrive extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
+    	CMap.leftDrive.set(output);
     }
 }

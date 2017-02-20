@@ -9,18 +9,25 @@ import gears.GearSubsystem;
 import vision.visionSubsystem;
 import PIDsub.*;
 import climber.ClimbSubsystem;
+import drive.LeftDriveTrain;
+import drive.RightDriveTrain;
 
 public class CMap { 
 	//Encoders
 	public static Encoder leftEncoder,
 							rightEncoder;
 	
+	//Gyroscope
 	public static AHRS gyro;
 	
 	//Motors
-	public static VictorSP leftDrive, rightDrive,
-						   climbMotor, leftGearMotor,
-						   rightGearMotor;
+	public static VictorSP leftTopDrive,
+							leftMiddleDrive,
+							leftBottomDrive,
+							rightTopDrive,
+							rightMiddleDrive,
+							rightBottomDrive,
+						   climbMotor;
 	
 	//Joysticks
 	public static Joystick leftStick, rightStick, auxStick;
@@ -28,6 +35,11 @@ public class CMap {
 	//Pnumatics
 	public static Compressor compressor;
 	
+	public static DoubleSolenoid gearMechanism,
+								 driveShift;
+	//Motors from Drive Train
+	public static LeftDriveTrain leftDrive;
+	public static RightDriveTrain rightDrive;
 	//PID Subsystems
 	public static leftDrive leftPID;
 	public static rightDrive rightPID;
@@ -39,17 +51,28 @@ public class CMap {
 	public static GearSubsystem gears;
 	public static GearShift shift;
 	public static ClimbSubsystem climber;
+
+	public static DoubleSolenoid shifter;
 	
 	public static void initialize(){
 		//Motors
-		leftDrive = new VictorSP(0);
-		rightDrive = new VictorSP(1);
-		climbMotor = new VictorSP(2);
-		leftGearMotor = new VictorSP(3);
-		rightGearMotor = new VictorSP(4);
+		leftTopDrive = new VictorSP(0);
+		leftMiddleDrive = new VictorSP(1);
+		leftBottomDrive = new VictorSP(2);
+		rightTopDrive = new VictorSP(3);
+		rightMiddleDrive = new VictorSP(4);
+		rightBottomDrive = new VictorSP(5);
+		climbMotor = new VictorSP(6);
+		leftDrive=new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
+		rightDrive= new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
+		
+		
+		shifter = new DoubleSolenoid(4,5);
+		//shift = new GearShift(leftDrive, rightDrive, shifter);
 		
 		//Encoders
 		
+		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
@@ -58,17 +81,21 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
+		*/
 		
 		
-		
-		gyro = new AHRS(SerialPort.Port.kUSB1);
-		gyro.reset();
+		//gyro = new AHRS(SerialPort.Port.kUSB1);
+		//gyro.reset();
 		
 		
 		//BTW, k4x tells the encoder to count the rising and falling edges
 		
 		//Pnumatics
 		//compressor = new Compressor();
+		
+		gearMechanism = new DoubleSolenoid(4, 5);
+		driveShift = new DoubleSolenoid(6, 7);
+		
 		
 		//Joysticks
 		leftStick = new Joystick(0);
@@ -85,7 +112,7 @@ public class CMap {
 		*/
 		
 		//Subsystems
-		drive = new DriveTrain(leftDrive, rightDrive);
+		//drive = new DriveTrain(leftDrive, rightDrive);
 		
 		//shift = new GearShift(drive, new DoubleSolenoid(0, 1), new DoubleSolenoid(2, 3), leftStick.getTrigger());
 		//drive.addGearShift(shift);
@@ -93,7 +120,7 @@ public class CMap {
 		//gears = new GearSubsystem(new VictorSP(3), new VictorSP(4), new DoubleSolenoid(4, 5));
 		//climber = new ClimbSubsystem(new VictorSP(2), new DigitalOutput(0), new Relay(0));
 		
-		vision = new visionSubsystem("LINKSVision");
+		//vision = new visionSubsystem("LINKSVision");
 		
 		System.out.println("Robot is Initialized");
 	}

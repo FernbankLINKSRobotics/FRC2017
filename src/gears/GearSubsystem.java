@@ -29,22 +29,18 @@ public class GearSubsystem {
 	 * 3. Pancake Cylinders activate to clamp
 	 */
 	public void main(){
-		depositGear(CMap.auxStick.getTrigger());
-		adjustWings(wingState);
+		adjustWings();
 		
 	}
 	
-	public void adjustWings(String state){
-		if(state == "Up"){
+	public void adjustWings(){
+		if(CMap.auxStick.getTrigger()){
 			intake.set(Value.kForward);
 		} else {
-			intake.set(Value.kForward);
+			intake.set(Value.kReverse);
 		}
 	}
 	
-	public void lowerRoller(){
-		
-	}
 	
 	public void depositGear(boolean button){
 		if(button){

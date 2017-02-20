@@ -8,23 +8,25 @@ import org.usfirst.frc.team4468.robot.CMap;
 import drive.*;
 
 public class GearShift {
-	public static DriveTrain drive;
-	public static DoubleSolenoid leftShift, rightShift;
+	public static LeftDriveTrain leftDrive;
+	public static RightDriveTrain rightDrive;
+	public static DoubleSolenoid shifter;
 	public static boolean shiftButton;
 	
 	public static String state;
 	private static boolean buttonBeenPressed = false;
 	
 	
-	public GearShift(DriveTrain drivetrain, DoubleSolenoid leftGearShift, DoubleSolenoid rightGearShift, boolean button){
-		drive = drivetrain;
-		leftShift = leftGearShift;
-		rightShift = rightGearShift;
+	public GearShift(LeftDriveTrain leftDriver, RightDriveTrain rightDriver, DoubleSolenoid gearShift){
+		leftDrive = leftDriver;
+		rightDrive = rightDriver;
+		shifter = gearShift;
 		
 		state = "Low";
 	}
 	
 	public void shift(){
+		shiftButton = CMap.leftStick.getTrigger();
 		if(shiftButton){
 			if(!buttonBeenPressed){
 				if(state == "Low"){
@@ -51,15 +53,9 @@ public class GearShift {
 	
 	public static void manageSolenoid(){
 		if(state == "High"){
-			leftShift.set(DoubleSolenoid.Value.kForward);
-			rightShift.set(DoubleSolenoid.Value.kForward);
-			CMap.leftEncoder.setDistancePerPulse(drive.highDistancePerPulse);
-			CMap.rightEncoder.setDistancePerPulse(drive.highDistancePerPulse);
+			shifter.set(DoubleSolenoid.Value.kForward);
 		} else {
-			leftShift.set(DoubleSolenoid.Value.kReverse);
-			rightShift.set(DoubleSolenoid.Value.kReverse);
-			CMap.leftEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
-			CMap.rightEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
+			shifter.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
 }

@@ -62,18 +62,27 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopInit(){
-		CMap.drive.disablePID(); //Disable the Left & Right Drive PIDs so they don't
+		//CMap.drive.disablePID(); //Disable the Left & Right Drive PIDs so they don't
 								 //interfere with the joysticks.
 	}
 	
 	public void teleopPeriodic(){
-		CMap.drive.main();
+		//CMap.drive.main();
 		//CMap.gears.main();
-		//CMap.climber.main();
+		//CMap.climber.main()
+		//Drive Code
+		CMap.leftDrive.set(CMap.leftStick.getY());
+		CMap.rightDrive.Set(-CMap.rightStick.getY());
+		
+		CMap.shift.shift();
+		
+		//CMap.climbMotor.set(1); //KEEP IT AT ONE
+		
 	}
 	
+	Compressor compressor = new Compressor();
 	public void testInit(){
-		
+		compressor.setClosedLoopControl(true);
 	}
 	
 	public void testPeriodic(){
