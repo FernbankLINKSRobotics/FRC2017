@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4468.robot;
 
-import drive.DriveTrain;
 import com.kauailabs.navx.frc.AHRS;
 import drive.GearShift;
 import edu.wpi.first.wpilibj.*;
@@ -46,14 +45,11 @@ public class CMap {
 	public static turnPID turnController;
 	
 	//Regular Subsystems
-	public static DriveTrain drive;
 	public static visionSubsystem vision;
 	public static GearSubsystem gears;
 	public static GearShift shift;
 	public static ClimbSubsystem climber;
 
-	public static DoubleSolenoid shifter;
-	
 	public static void initialize(){
 		//Motors
 		leftTopDrive = new VictorSP(0);
@@ -63,12 +59,10 @@ public class CMap {
 		rightMiddleDrive = new VictorSP(4);
 		rightBottomDrive = new VictorSP(5);
 		climbMotor = new VictorSP(6);
+		
+		
 		leftDrive=new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
 		rightDrive= new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
-		
-		
-		shifter = new DoubleSolenoid(4,5);
-		//shift = new GearShift(leftDrive, rightDrive, shifter);
 		
 		//Encoders
 		
@@ -96,6 +90,8 @@ public class CMap {
 		gearMechanism = new DoubleSolenoid(4, 5);
 		driveShift = new DoubleSolenoid(6, 7);
 		
+		shift = new GearShift(leftDrive, rightDrive, driveShift);
+		climber = new ClimbSubsystem(climbMotor);
 		
 		//Joysticks
 		leftStick = new Joystick(0);

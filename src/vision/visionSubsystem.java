@@ -51,20 +51,6 @@ public class visionSubsystem {
 		idealX = goodX;
 		idealY = goodY;
 		visionTable = NetworkTable.getTable(tableName);
-		
-		connectedToRaspberry = visionTable.getBoolean("Online?", false);
-		while(!connectedToRaspberry){
-			connectedToRaspberry = visionTable.getBoolean("Online?", false);
-			if(!connectedToRaspberry && startUpTimer.get() >= 15){
-				System.out.println("Failed to Connect to Raspberry Pi"); //Let us Know
-				startUpTimer.reset();
-				break; //Exit the Loop
-			}
-		}
-		if(connectedToRaspberry){
-			System.out.println("Connected to Raspberry Pi.");
-		}
-		
 	}
 	
 	/**
@@ -78,19 +64,6 @@ public class visionSubsystem {
 		idealX = centerOfCamera[0];
 		idealY = centerOfCamera[1];
 		visionTable = NetworkTable.getTable(tableName);
-		while(!connectedToRaspberry){
-			connectedToRaspberry = visionTable.getBoolean("Online?", false);
-			
-			if(!connectedToRaspberry && startUpTimer.get() >= 15){ //If
-				System.out.println("Failed to Connect to Raspberry Pi"); //Let us Know
-				startUpTimer.reset();
-				break; //Exit the Loop
-			}
-			
-		}
-		if(connectedToRaspberry){
-			System.out.println("Connected to Raspberry Pi.");
-		}
 	}
 	
 	/**

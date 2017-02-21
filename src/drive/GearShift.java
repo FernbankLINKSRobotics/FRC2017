@@ -25,8 +25,13 @@ public class GearShift {
 		state = "Low";
 	}
 	
-	public void shift(){
-		shiftButton = CMap.leftStick.getTrigger();
+	public void main(boolean button){
+		shift(button);
+		manageSolenoid();
+	}
+	
+	public static void shift(boolean button){
+		shiftButton = button;
 		if(shiftButton){
 			if(!buttonBeenPressed){
 				if(state == "Low"){
@@ -42,7 +47,6 @@ public class GearShift {
 			buttonBeenPressed = false;
 		}
 		
-		manageSolenoid();
 	}
 	
 	//This will be used if we need to shift states in 

@@ -11,8 +11,6 @@ public class GearSubsystem {
 	
 	public DoubleSolenoid intake = null;
 	
-	public String wingState = "Up";
-	
 	private boolean intakeButtonBeenPressed = false;
 	
 	
@@ -28,13 +26,13 @@ public class GearSubsystem {
 	 * 2. Activate Rollers to turn in
 	 * 3. Pancake Cylinders activate to clamp
 	 */
-	public void main(){
-		adjustWings();
+	public void main(boolean button){
+		adjustIntake(button);
 		
 	}
 	
-	public void adjustWings(){
-		if(CMap.auxStick.getTrigger()){
+	public void adjustIntake(boolean button){
+		if(button){
 			intake.set(Value.kForward);
 		} else {
 			intake.set(Value.kReverse);
@@ -42,10 +40,5 @@ public class GearSubsystem {
 	}
 	
 	
-	public void depositGear(boolean button){
-		if(button){
-			intake.set(Value.kReverse); //Let go of the gear
-		}
-	}
 	
 }

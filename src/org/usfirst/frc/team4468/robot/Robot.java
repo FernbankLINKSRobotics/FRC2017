@@ -74,12 +74,19 @@ public class Robot extends IterativeRobot {
 		CMap.leftDrive.set(CMap.leftStick.getY());
 		CMap.rightDrive.Set(-CMap.rightStick.getY());
 		
-		CMap.shift.shift();
+		//Shifting Code
+		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
-		//CMap.climbMotor.set(1); //KEEP IT AT ONE
+		//Climbing Code
+		CMap.climber.climb(CMap.auxStick.getRawButton(2)); //So, use getRawButton if you need to specifically
+		//call a button outside of the trigger. The number used corresponds to the button with that number on the driver station.
+		
+		//Gear Mechanism Code
+		CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
 		
 	}
 	
+	//Use Test Mode to charge the compressor.
 	Compressor compressor = new Compressor();
 	public void testInit(){
 		compressor.setClosedLoopControl(true);
