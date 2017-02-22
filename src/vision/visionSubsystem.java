@@ -116,6 +116,6 @@ public class visionSubsystem {
 	
 	public boolean checkConnection(){
 		
-		return (Boolean) null;
+		return false;
 	}
 }
