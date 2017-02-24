@@ -19,13 +19,10 @@ public class LeftDriveTrain {
 		leftBottomDrive= motor3;
 	}
 	
-	public void leftDriveTrain(VictorSP leftTopDrive, VictorSP leftMiddleDrive, VictorSP leftBottomDrive){
-		
-	}
-	
 	public void set(double speed) {
 		leftTopDrive.set(speed);
 		leftMiddleDrive.set(speed);
 		leftBottomDrive.set(speed);
 	}
+	
 }

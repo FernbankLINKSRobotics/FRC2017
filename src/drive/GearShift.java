@@ -8,8 +8,6 @@ import org.usfirst.frc.team4468.robot.CMap;
 import drive.*;
 
 public class GearShift {
-	public static LeftDriveTrain leftDrive;
-	public static RightDriveTrain rightDrive;
 	public static DoubleSolenoid shifter;
 	public static boolean shiftButton;
 	
@@ -17,9 +15,7 @@ public class GearShift {
 	private static boolean buttonBeenPressed = false;
 	
 	
-	public GearShift(LeftDriveTrain leftDriver, RightDriveTrain rightDriver, DoubleSolenoid gearShift){
-		leftDrive = leftDriver;
-		rightDrive = rightDriver;
+	public GearShift(DoubleSolenoid gearShift){
 		shifter = gearShift;
 		
 		state = "Low";

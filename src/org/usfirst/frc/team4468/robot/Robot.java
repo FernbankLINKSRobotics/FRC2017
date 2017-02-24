@@ -67,11 +67,8 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic(){
-		//CMap.drive.main();
-		//CMap.gears.main();
-		//CMap.climber.main()
 		//Drive Code
-		CMap.leftDrive.set(CMap.leftStick.getY());
+		CMap.leftDrive.set(-CMap.leftStick.getY());
 		CMap.rightDrive.Set(-CMap.rightStick.getY());
 		
 		//Shifting Code
@@ -79,12 +76,13 @@ public class Robot extends IterativeRobot {
 		
 		//Climbing Code
 		CMap.climber.climb(CMap.auxStick.getRawButton(2)); //So, use getRawButton if you need to specifically
-		//call a button outside of the trigger. The number used corresponds to the button with that number on the driver station.
 		
 		//Gear Mechanism Code
 		CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
 		
 	}
+	
+	
 	
 	//Use Test Mode to charge the compressor.
 	Compressor compressor = new Compressor();
@@ -93,7 +91,9 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testPeriodic(){
-		
+		//System.out.println(CMap.leftEncoder.getRaw());
+		//System.out.println(CMap.rightEncoder.getRaw());
+		//Gear.run(2);
 	}
 	
 }

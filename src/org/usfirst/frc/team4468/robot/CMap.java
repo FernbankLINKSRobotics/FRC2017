@@ -12,6 +12,15 @@ import drive.LeftDriveTrain;
 import drive.RightDriveTrain;
 
 public class CMap { 
+	public final double wheelDiameter = 4;
+	
+	//Need to find these values either through trial-and-error or complex math.
+	public final double lowPulsePerRevolution = 5050;
+	public final double highPulsePerRevolution = 4040;
+	
+	public final double lowDistancePerPulse = (1/lowPulsePerRevolution) * Math.PI * wheelDiameter;
+	public final double highDistancePerPulse = (1/highPulsePerRevolution) * Math.PI * wheelDiameter;
+	
 	//Encoders
 	public static Encoder leftEncoder,
 							rightEncoder;
@@ -31,14 +40,14 @@ public class CMap {
 	//Joysticks
 	public static Joystick leftStick, rightStick, auxStick;
 	
-	//Pnumatics
-	public static Compressor compressor;
-	
+	//Pnematics
 	public static DoubleSolenoid gearMechanism,
 								 driveShift;
-	//Motors from Drive Train
+	
+	//Drive Train Subsystems
 	public static LeftDriveTrain leftDrive;
 	public static RightDriveTrain rightDrive;
+	
 	//PID Subsystems
 	public static leftDrive leftPID;
 	public static rightDrive rightPID;
@@ -60,12 +69,12 @@ public class CMap {
 		rightBottomDrive = new VictorSP(5);
 		climbMotor = new VictorSP(6);
 		
-		
-		leftDrive=new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
-		rightDrive= new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
+		//Invert Left Side of Motors to Make PIDs Easier
+		leftTopDrive.setInverted(true);
+		leftMiddleDrive.setInverted(true);
+		leftBottomDrive.setInverted(true);
 		
 		//Encoders
-		
 		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
@@ -73,25 +82,20 @@ public class CMap {
 		leftEncoder.reset();
 		rightEncoder.reset();
 		
-		leftEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
-		rightEncoder.setDistancePerPulse(drive.lowDistancePerPulse);
+		leftEncoder.setReverseDirection(true);
+		
+		leftEncoder.setDistancePerPulse(lowDistancePerPulse);
+		rightEncoder.setDistancePerPulse(lowDistancePerPulse);
 		*/
 		
-		
+	
 		//gyro = new AHRS(SerialPort.Port.kUSB1);
 		//gyro.reset();
 		
-		
-		//BTW, k4x tells the encoder to count the rising and falling edges
-		
 		//Pnumatics
-		//compressor = new Compressor();
-		
 		gearMechanism = new DoubleSolenoid(4, 5);
 		driveShift = new DoubleSolenoid(6, 7);
 		
-		shift = new GearShift(leftDrive, rightDrive, driveShift);
-		climber = new ClimbSubsystem(climbMotor);
 		
 		//Joysticks
 		leftStick = new Joystick(0);
@@ -99,24 +103,18 @@ public class CMap {
 		auxStick = new Joystick(2);
 		
 		//PID Subsystems
-		/*
 		leftPID = new leftDrive();
 		rightPID = new rightDrive();
 		turnController = new turnPID();
 		
 		turnController.getPIDController().disable();
-		*/
-		
-		//Subsystems
-		//drive = new DriveTrain(leftDrive, rightDrive);
-		
-		//shift = new GearShift(drive, new DoubleSolenoid(0, 1), new DoubleSolenoid(2, 3), leftStick.getTrigger());
-		//drive.addGearShift(shift);
-		
-		//gears = new GearSubsystem(new VictorSP(3), new VictorSP(4), new DoubleSolenoid(4, 5));
-		//climber = new ClimbSubsystem(new VictorSP(2), new DigitalOutput(0), new Relay(0));
 		
 		//vision = new visionSubsystem("LINKSVision");
+		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
+		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
+		shift = new GearShift(driveShift);
+		climber = new ClimbSubsystem(climbMotor);
+		gears = new GearSubsystem(gearMechanism);
 		
 		System.out.println("Robot is Initialized");
 	}
