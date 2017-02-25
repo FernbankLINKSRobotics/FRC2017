@@ -25,7 +25,9 @@ public class turnPID extends PIDSubsystem {
     
     protected double returnPIDInput() {
     	
+    	//System.out.println(CMap.gyro.getAngle())
     	//return CMap.gyro.getAngle();
+    	
     	return 0;
     }
     
@@ -33,5 +35,7 @@ public class turnPID extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
     	//CMap.drive.turnSet(output);
+    	CMap.rightDrive.Set(output);
+    	CMap.leftDrive.set(-output);
     }
 }
