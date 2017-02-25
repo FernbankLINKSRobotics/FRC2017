@@ -68,26 +68,28 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic(){
 		//Drive Code
-		CMap.leftDrive.set(-CMap.leftStick.getY());
-		CMap.rightDrive.Set(-CMap.rightStick.getY());
+		CMap.leftDrive.set(.1);
+		CMap.rightDrive.Set(.1);
 		
 		//Shifting Code
-		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
+		//CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
 		//Climbing Code
 		CMap.climber.climb(CMap.auxStick.getRawButton(2)); //So, use getRawButton if you need to specifically
 		
+		System.out.println(CMap.leftEncoder.getRaw());
+		
 		//Gear Mechanism Code
-		CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
+		///CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
 		
 	}
 	
 	
 	
 	//Use Test Mode to charge the compressor.
-	Compressor compressor = new Compressor();
+	//Compressor compressor = new Compressor();
 	public void testInit(){
-		compressor.setClosedLoopControl(true);
+		//compressor.setClosedLoopControl(true);
 	}
 	
 	public void testPeriodic(){

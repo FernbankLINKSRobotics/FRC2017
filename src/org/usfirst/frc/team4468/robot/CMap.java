@@ -15,11 +15,17 @@ public class CMap {
 	public final static double wheelDiameter = 4;
 	
 	//Need to find these values either through trial-and-error or complex math.
-	public final static double lowPulsePerRevolution = 5050; //Low Gear
-	public final double highPulsePerRevolution = 4040; //High Gear
+	public final static double pulsePerRevolution = 128; //Low Gear
+	public final static double lowEncoderGearRatio = 15.32;
+	public final static double lowGearRatio = 15.32;
 	
-	public final static double lowDistancePerPulse = (1/lowPulsePerRevolution) * Math.PI * wheelDiameter;
-	public final double highDistancePerPulse = (1/highPulsePerRevolution) * Math.PI * wheelDiameter;
+	public final static double highEncoderGearRatio = 4.17;
+	public final static double highGearRatio = 4.17;
+	
+	public final static double lowDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution /
+    		lowEncoderGearRatio/lowGearRatio * 1;
+	public final static double highDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution /
+    		highEncoderGearRatio/highGearRatio * 1;
 	
 	//Encoders
 	public static Encoder leftEncoder,
@@ -75,7 +81,6 @@ public class CMap {
 		leftBottomDrive.setInverted(true);
 		
 		//Encoders
-		
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
@@ -93,9 +98,10 @@ public class CMap {
 		//gyro.reset();
 		
 		//Pnumatics
+		/*
 		gearMechanism = new DoubleSolenoid(4, 5);
 		driveShift = new DoubleSolenoid(6, 7);
-		
+		*/
 		
 		//Joysticks
 		leftStick = new Joystick(0);
@@ -103,21 +109,21 @@ public class CMap {
 		auxStick = new Joystick(2);
 		
 		//PID Subsystems
-		leftPID = new leftDrive();
-		rightPID = new rightDrive();
-		turnController = new turnPID();
+		//leftPID = new leftDrive();
+		//rightPID = new rightDrive();
+		//turnController = new turnPID();
 		
-		leftPID.getPIDController().enable();
-		rightPID.getPIDController().enable();
+		//leftPID.getPIDController().enable();
+		//rightPID.getPIDController().enable();
 		
-		turnController.getPIDController().disable();
+		//turnController.getPIDController().disable();
 		
 		//vision = new visionSubsystem("LINKSVision");
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
 		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
-		shift = new GearShift(driveShift);
+		//shift = new GearShift(driveShift);
 		climber = new ClimbSubsystem(climbMotor);
-		gears = new GearSubsystem(gearMechanism);
+		//gears = new GearSubsystem(gearMechanism);
 		
 		System.out.println("Robot is Initialized");
 	}
