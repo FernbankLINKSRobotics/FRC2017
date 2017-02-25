@@ -12,13 +12,13 @@ import drive.LeftDriveTrain;
 import drive.RightDriveTrain;
 
 public class CMap { 
-	public final double wheelDiameter = 4;
+	public final static double wheelDiameter = 4;
 	
 	//Need to find these values either through trial-and-error or complex math.
-	public final double lowPulsePerRevolution = 5050;
-	public final double highPulsePerRevolution = 4040;
+	public final static double lowPulsePerRevolution = 5050; //Low Gear
+	public final double highPulsePerRevolution = 4040; //High Gear
 	
-	public final double lowDistancePerPulse = (1/lowPulsePerRevolution) * Math.PI * wheelDiameter;
+	public final static double lowDistancePerPulse = (1/lowPulsePerRevolution) * Math.PI * wheelDiameter;
 	public final double highDistancePerPulse = (1/highPulsePerRevolution) * Math.PI * wheelDiameter;
 	
 	//Encoders
@@ -75,7 +75,7 @@ public class CMap {
 		leftBottomDrive.setInverted(true);
 		
 		//Encoders
-		/*
+		
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
@@ -86,7 +86,7 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(lowDistancePerPulse);
-		*/
+		
 		
 	
 		//gyro = new AHRS(SerialPort.Port.kUSB1);
@@ -106,6 +106,9 @@ public class CMap {
 		leftPID = new leftDrive();
 		rightPID = new rightDrive();
 		turnController = new turnPID();
+		
+		leftPID.getPIDController().enable();
+		rightPID.getPIDController().enable();
 		
 		turnController.getPIDController().disable();
 		

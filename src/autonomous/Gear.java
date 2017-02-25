@@ -19,7 +19,9 @@ public class Gear {
 	
 	static boolean visionCorrection = false;
 	
-	static double distanceToLift;
+	
+	//DISTANCE TO LIFT FROM STARTING
+	static double distanceToLift = 90;
 	static double angle;
 	
 	static double zeroGyroAngle = -999;

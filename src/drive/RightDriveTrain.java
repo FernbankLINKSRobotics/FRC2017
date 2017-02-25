@@ -20,9 +20,7 @@ public class RightDriveTrain {
 		rightBottomDrive=motor6;
 		
 	}
-	public void rightDriveTrain(VictorSP rightTopDrive, VictorSP rightMiddleDrive, VictorSP rightBottomDrive){
-		
-	}
+	
 	public void Set(double speed) {
 		rightTopDrive.set(speed);
 		rightMiddleDrive.set(speed);

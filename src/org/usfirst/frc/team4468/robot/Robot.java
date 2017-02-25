@@ -43,20 +43,20 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousPeriodic(){
-		/*
+		
 		switch(autonomous){
 		case "Gears Left":
-			Gear.main(1);
+			Gear.run(1);
 			break;
 		case "Gears Center":
-			Gear.main(2);
+			Gear.run(2);
 			break;
 		case "Gears Right":
-			Gear.main(3);
+			Gear.run(3);
 			break;
 		default:
 			Baseline.main();
-		}*/
+		}
 		
 		
 	}
@@ -94,6 +94,9 @@ public class Robot extends IterativeRobot {
 		//System.out.println(CMap.leftEncoder.getRaw());
 		//System.out.println(CMap.rightEncoder.getRaw());
 		//Gear.run(2);
+		
+		//CMap.turnController.getPIDController().enable();
+		//CMap.turnController.getPIDController().setSetpoint(90);
 	}
 	
 }
