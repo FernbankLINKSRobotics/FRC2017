@@ -40,7 +40,8 @@ public class CMap {
 							rightTopDrive,
 							rightMiddleDrive,
 							rightBottomDrive,
-						   climbMotor;
+						   climbMotor1,
+						   climbMotor2;
 	
 	//Joysticks
 	public static Joystick leftStick, rightStick, auxStick;
@@ -63,6 +64,8 @@ public class CMap {
 	public static GearSubsystem gears;
 	public static GearShift shift;
 	public static ClimbSubsystem climber;
+	
+	public static CameraServer server;
 
 	public static void initialize(){
 		//Motors
@@ -72,8 +75,8 @@ public class CMap {
 		rightTopDrive = new VictorSP(3);
 		rightMiddleDrive = new VictorSP(4);
 		rightBottomDrive = new VictorSP(5);
-		climbMotor = new VictorSP(6);
-		
+		climbMotor1 = new VictorSP(6);
+		climbMotor2 = new VictorSP(7);
 		//Invert Left Side of Motors to Make PIDs Easier
 		leftTopDrive.setInverted(true);
 		leftMiddleDrive.setInverted(true);
@@ -131,8 +134,10 @@ public class CMap {
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
 		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
 		shift = new GearShift(driveShift);
-		//climber = new ClimbSubsystem(climbMotor);
+		climber = new ClimbSubsystem(climbMotor1, climbMotor2);
 		gears = new GearSubsystem(gearMechanism);
+		
+		server = CameraServer.getInstance();
 		
 		System.out.println("Robot is Initialized");
 	}

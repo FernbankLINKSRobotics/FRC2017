@@ -27,8 +27,8 @@ public class ClimbSubsystem {
 	//built in that prevents it from moving backwards
 	public void climb(boolean button){
 		if(button){
-			climbMotor.set(1);
-			climbMotor2.set(1);
+			climbMotor.set(-1);
+			climbMotor2.set(-1);
 		} else {
 			climbMotor.set(0);
 			climbMotor2.set(0);
