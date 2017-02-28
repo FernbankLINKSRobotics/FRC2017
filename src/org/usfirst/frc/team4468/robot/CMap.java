@@ -138,6 +138,7 @@ public class CMap {
 		gears = new GearSubsystem(gearMechanism);
 		
 		server = CameraServer.getInstance();
+		server.startAutomaticCapture();
 		
 		System.out.println("Robot is Initialized");
 	}
