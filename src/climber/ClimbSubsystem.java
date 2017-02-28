@@ -9,12 +9,13 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Relay.Value;
 
 public class ClimbSubsystem {
-	public VictorSP climbMotor;
+	public VictorSP climbMotor, climbMotor2;
 	
 	private boolean climbing;
 	
-	public ClimbSubsystem(VictorSP motor){
+	public ClimbSubsystem(VictorSP motor, VictorSP motor2){
 		climbMotor = motor;
+		climbMotor2 = motor2;
 	}
 	
 	public void main(){
@@ -27,8 +28,10 @@ public class ClimbSubsystem {
 	public void climb(boolean button){
 		if(button){
 			climbMotor.set(1);
+			climbMotor2.set(1);
 		} else {
 			climbMotor.set(0);
+			climbMotor2.set(0);
 		}
 	}
 }

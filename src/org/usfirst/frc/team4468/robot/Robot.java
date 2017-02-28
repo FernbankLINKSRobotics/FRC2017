@@ -31,11 +31,13 @@ public class Robot extends IterativeRobot {
 	
 	public void autonomousInit(){
 		//This will get the values from the Driver Station so we don't reflash code.
-		if(SmartDashboard.getBoolean("DB/Button 1", false)){
+		if(SmartDashboard.getBoolean("DB/Button 0", false)){
+			System.out.println("LEFT AUTO");
 			autonomous = "Gears Left";
-		} else if(SmartDashboard.getBoolean("DB/Button 2", false)){
+		} else if(SmartDashboard.getBoolean("DB/Button 1", false)){
+			System.out.println("CENTER AUTO");
 			autonomous = "Gears Center";
-		} else if(SmartDashboard.getBoolean("DB/Button 3", false)){
+		} else if(SmartDashboard.getBoolean("DB/Button 2", false)){
 			autonomous = "Gears Right";
 		} else {
 			autonomous = "Baseline";
@@ -64,23 +66,34 @@ public class Robot extends IterativeRobot {
 	public void teleopInit(){
 		//CMap.drive.disablePID(); //Disable the Left & Right Drive PIDs so they don't
 								 //interfere with the joysticks.
+			CMap.leftEncoder.reset();
+			CMap.rightEncoder.reset();
+			
+			CMap.leftPID.getPIDController().disable();
+			CMap.rightPID.getPIDController().disable();
+
 	}
 	
 	public void teleopPeriodic(){
 		//Drive Code
-		CMap.leftDrive.set(.1);
-		CMap.rightDrive.Set(.1);
+		CMap.leftDrive.set(-CMap.leftStick.getY());
+		CMap.rightDrive.Set(-CMap.rightStick.getY());
+		
+		
+		System.out.println(CMap.rightEncoder.getRaw());
+		
 		
 		//Shifting Code
-		//CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
+		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
 		//Climbing Code
-		CMap.climber.climb(CMap.auxStick.getRawButton(2)); //So, use getRawButton if you need to specifically
+		//CMap.climber.climb(CMap.auxStick.getRawButton(2)); //So, use getRawButton if you need to specifically
 		
-		System.out.println(CMap.leftEncoder.getRaw());
+		System.out.println(CMap.leftEncoder.getDistance());
 		
 		//Gear Mechanism Code
-		///CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
+		CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
+		
 		
 	}
 	
@@ -96,9 +109,8 @@ public class Robot extends IterativeRobot {
 		//System.out.println(CMap.leftEncoder.getRaw());
 		//System.out.println(CMap.rightEncoder.getRaw());
 		//Gear.run(2);
-		
-		//CMap.turnController.getPIDController().enable();
-		//CMap.turnController.getPIDController().setSetpoint(90);
+		//CMap.rightPID.getPIDController().setSetpoint(200);
+		//System.out.println(CMap.rightEncoder.getDistance());
 	}
 	
 }

@@ -32,6 +32,7 @@ public class Gear {
 	public static void run(int position){
 		if(position == 1 || position == 3){
 			driveToSide(position);
+			
 		} else if(position == 2){
 			CMap.leftPID.getPIDController().setSetpoint(distanceToLift);
 			CMap.rightPID.getPIDController().setSetpoint(distanceToLift);
@@ -39,55 +40,54 @@ public class Gear {
 	}
 	
 	public static void driveToSide(int side){
+		//System.out.println(CMap.leftPID.getPosition());
 		if(side == 1){
 			//Drive Forward
 			if(!initialStraight){
-				CMap.leftPID.getPIDController().setSetpoint(0);
-				CMap.rightPID.getPIDController().setSetpoint(0);
-				if(CMap.leftPID.onTarget()){
+				CMap.leftPID.getPIDController().setSetpoint(distanceToLift);
+				CMap.rightPID.getPIDController().setSetpoint(distanceToLift);
+				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
+					System.out.println("IM HERE");
 					initialStraight = true;
-					CMap.leftPID.getPIDController().disable();
-					CMap.rightPID.getPIDController().disable();
+					
 				}
 			//Gyro Turn, have vision correct error
 			} else if(!turnedToSide){
-				//Need to replace the 45 with whatever the angle is
-				CMap.turnController.getPIDController().setSetpoint(45);
-				if(CMap.turnController.onTarget()){
+				
+				CMap.leftPID.getPIDController().setSetpoint(180);
+				if(CMap.leftPID.getPosition() >= 179){
+					//turnedToSide = true;
+					System.out.println("IM HERE");
 					turnedToSide = true;
-					CMap.turnController.disable();
-					CMap.leftPID.getPIDController().enable();
-					CMap.rightPID.getPIDController().enable();
 				}
 			//Drive Forward and Place Gear
 			} else {
-				CMap.leftPID.getPIDController().setSetpoint(0);
-				CMap.rightPID.getPIDController().setSetpoint(0);
+				CMap.leftPID.getPIDController().setSetpoint(360);
+				CMap.rightPID.getPIDController().setSetpoint(270);
 			}
-		} else {
-			//Drive Forward
+		} else {//Drive Forward
+			System.out.println("FGYISGIGFIUHIUHUI");
 			if(!initialStraight){
-				CMap.leftPID.getPIDController().setSetpoint(0);
-				CMap.rightPID.getPIDController().setSetpoint(0);
-				if(CMap.leftPID.onTarget()){
+				CMap.leftPID.getPIDController().setSetpoint(distanceToLift);
+				CMap.rightPID.getPIDController().setSetpoint(distanceToLift);
+				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
+					System.out.println("IM HERE");
 					initialStraight = true;
-					CMap.leftPID.getPIDController().disable();
-					CMap.rightPID.getPIDController().disable();
+					
 				}
 			//Gyro Turn, have vision correct error
 			} else if(!turnedToSide){
-				//Need to replace the 45 with whatever the angle is
-				CMap.turnController.getPIDController().setSetpoint(45);
-				if(CMap.turnController.onTarget()){
+				
+				CMap.rightPID.getPIDController().setSetpoint(180);
+				if(CMap.rightPID.getPosition() >= 179){
+					//turnedToSide = true;
+					System.out.println("IM HERE");
 					turnedToSide = true;
-					CMap.turnController.disable();
-					CMap.leftPID.getPIDController().enable();
-					CMap.rightPID.getPIDController().enable();
 				}
 			//Drive Forward and Place Gear
 			} else {
-				CMap.leftPID.getPIDController().setSetpoint(0);
-				CMap.rightPID.getPIDController().setSetpoint(0);
+				CMap.leftPID.getPIDController().setSetpoint(270);
+				CMap.rightPID.getPIDController().setSetpoint(360);
 			}
 		}
 	}

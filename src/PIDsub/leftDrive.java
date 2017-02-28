@@ -26,8 +26,8 @@ public class leftDrive extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    	System.out.println("LEFT ENCODER DISTANCE: " + CMap.leftEncoder.getDistance());
-    	return CMap.leftEncoder.getDistance();
+    	//System.out.println("LEFT ENCODER DISTANCE: " + CMap.leftEncoder.getDistance());
+    	return -CMap.leftEncoder.getDistance();
     }
     
     protected void usePIDOutput(double output) {
