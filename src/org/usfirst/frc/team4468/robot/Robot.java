@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	String autonomous = "Break the Baseline";
+	int autonomous;
 	
 	public void robotInit(){
 		CMap.initialize();
@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
 	
 	public void autonomousInit(){
 		//This will get the values from the Driver Station so we don't reflash code.
+<<<<<<< Updated upstream
 		if(SmartDashboard.getBoolean("DB/Button 0", false)){
 			System.out.println("LEFT AUTO");
 			autonomous = "Gears Left";
@@ -39,28 +40,26 @@ public class Robot extends IterativeRobot {
 			autonomous = "Gears Center";
 		} else if(SmartDashboard.getBoolean("DB/Button 2", false)){
 			autonomous = "Gears Right";
+=======
+		if(SmartDashboard.getBoolean("DB/Button 1", false)){
+			autonomous = 1; // Gears Left
+		} else if(SmartDashboard.getBoolean("DB/Button 2", false)){
+			autonomous = 2; // Gears Center
+		} else if(SmartDashboard.getBoolean("DB/Button 3", false)){
+			autonomous = 3; // Gears Right
+>>>>>>> Stashed changes
 		} else {
-			autonomous = "Baseline";
+			autonomous = 0; // Break Baseline
 		}
 	}
 	
 	public void autonomousPeriodic(){
 		
-		switch(autonomous){
-		case "Gears Left":
-			Gear.run(1);
-			break;
-		case "Gears Center":
-			Gear.run(2);
-			break;
-		case "Gears Right":
-			Gear.run(3);
-			break;
-		default:
+		if(autonomous == 0){
 			Baseline.main();
+		} else {
+			Gear.run(autonomous);
 		}
-		
-		
 	}
 	
 	public void teleopInit(){
@@ -76,12 +75,22 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic(){
 		//Drive Code
+<<<<<<< Updated upstream
 		CMap.leftDrive.set(-CMap.leftStick.getY());
 		CMap.rightDrive.Set(-CMap.rightStick.getY());
 		
 		
 		System.out.println(CMap.rightEncoder.getRaw());
 		
+=======
+<<<<<<< Updated upstream
+		CMap.leftDrive.set(.1);
+		CMap.rightDrive.Set(.1);
+=======
+		CMap.leftDrive.set(-CMap.leftStick.getY());
+		CMap.rightDrive.set(-CMap.rightStick.getY());
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 		
 		//Shifting Code
 		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code

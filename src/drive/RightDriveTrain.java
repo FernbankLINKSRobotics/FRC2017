@@ -21,7 +21,7 @@ public class RightDriveTrain {
 		
 	}
 	
-	public void Set(double speed) {
+	public void set(double speed) {
 		rightTopDrive.set(speed);
 		rightMiddleDrive.set(speed);
 		rightBottomDrive.set(speed);
