@@ -72,12 +72,12 @@ public class Robot extends IterativeRobot {
 		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
 		//Climbing Code
-		CMap.climber.climb(CMap.auxStick.getRawButton(2)); //So, use getRawButton if you need to specifically
+		CMap.climber.climb(CMap.rightStick.getRawButton(4)); //So, use getRawButton if you need to specifically
 		
 		System.out.println(CMap.leftEncoder.getDistance());
 		
 		//Gear Mechanism Code
-		CMap.gears.adjustIntake(CMap.auxStick.getTrigger());
+		CMap.gears.adjustIntake(CMap.rightStick.getTrigger());
 		
 		
 	}

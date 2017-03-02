@@ -44,7 +44,7 @@ public class CMap {
 						   climbMotor2;
 	
 	//Joysticks
-	public static Joystick leftStick, rightStick, auxStick;
+	public static Joystick leftStick, rightStick;
 	
 	//Pnematics
 	public static DoubleSolenoid gearMechanism,
@@ -113,7 +113,6 @@ public class CMap {
 		//Joysticks
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
-		auxStick = new Joystick(2);
 		
 		//PID Subsystems
 		leftPID = new leftDrive();
