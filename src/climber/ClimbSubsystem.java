@@ -18,10 +18,6 @@ public class ClimbSubsystem {
 		climbMotor2 = motor2;
 	}
 	
-	public void main(){
-		this.climb(CMap.auxStick.getRawButton(8));
-	}
-	
 	
 	//According to Adam, the motor will have a mechanism
 	//built in that prevents it from moving backwards

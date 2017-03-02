@@ -31,11 +31,11 @@ public class Robot extends IterativeRobot {
 	
 	public void autonomousInit(){
 		//This will get the values from the Driver Station so we don't reflash code.
-		if(SmartDashboard.getBoolean("DB/Button 1", false)){
+		if(SmartDashboard.getBoolean("DB/Button 0", false)){
 			autonomous = 1; // Gears Left
-		} else if(SmartDashboard.getBoolean("DB/Button 2", false)){
+		} else if(SmartDashboard.getBoolean("DB/Button 1", false)){
 			autonomous = 2; // Gears Center
-		} else if(SmartDashboard.getBoolean("DB/Button 3", false)){
+		} else if(SmartDashboard.getBoolean("DB/Button 2", false)){
 			autonomous = 3; // Gears Right
 		} else {
 			autonomous = 0; // Break Baseline
