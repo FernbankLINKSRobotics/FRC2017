@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	int autonomous;
+	public int autonomous;
 	
 	public void robotInit(){
 		CMap.initialize();
@@ -43,6 +43,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousPeriodic(){
+		System.out.println(autonomous);
 		
 		if(autonomous == 0){
 			Baseline.main();
