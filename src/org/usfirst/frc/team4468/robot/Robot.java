@@ -64,10 +64,21 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic(){
-		
-		//Drive Code
-		CMap.leftDrive.set(-CMap.leftStick.getY());
-		CMap.rightDrive.set(-CMap.rightStick.getY());
+		if(CMap.leftStick.getRawButton(2)){
+			//Drive Forward
+			CMap.leftDrive.set(1);
+			CMap.rightDrive.set(1);
+		} else if(CMap.leftStick.getRawButton(3)){
+			//Drive Backward
+			CMap.leftDrive.set(-1);
+			CMap.rightDrive.set(-1);
+		} else if(Math.abs(CMap.leftStick.getY()) > 0){
+			CMap.leftDrive.set(-CMap.leftStick.getY());
+			CMap.rightDrive.set(-CMap.rightStick.getY());
+		} else {
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
+		}
 		
 		//Shifting Code
 		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
@@ -80,11 +91,12 @@ public class Robot extends IterativeRobot {
 		//Gear Mechanism Code
 		CMap.gears.adjustIntake(CMap.rightStick.getTrigger());
 		
+		/*
 		//Drive straight code
 		if (CMap.leftStick.getRawButton(2)) {
 			CMap.leftPID.setSetpoint(395);
 			CMap.rightPID.setSetpoint(395);
-		}
+		}*/
 		
 		
 	}
