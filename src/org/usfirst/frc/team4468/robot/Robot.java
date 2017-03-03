@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic(){
+		
 		//Drive Code
 		CMap.leftDrive.set(-CMap.leftStick.getY());
 		CMap.rightDrive.set(-CMap.rightStick.getY());
@@ -78,6 +79,12 @@ public class Robot extends IterativeRobot {
 		
 		//Gear Mechanism Code
 		CMap.gears.adjustIntake(CMap.rightStick.getTrigger());
+		
+		//Drive straight code
+		if (CMap.leftStick.getRawButton(2)) {
+			CMap.leftPID.setSetpoint(395);
+			CMap.rightPID.setSetpoint(395);
+		}
 		
 		
 	}
