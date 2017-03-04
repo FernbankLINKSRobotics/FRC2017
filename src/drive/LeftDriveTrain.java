@@ -12,7 +12,6 @@ public class LeftDriveTrain {
 		System.out.println("Motors have been initialized.");
 	}
 	
-	
 	public LeftDriveTrain(VictorSP motor1, VictorSP motor2, VictorSP motor3){
 		leftTopDrive= motor1;
 		leftMiddleDrive= motor2;

@@ -33,9 +33,9 @@ public class GearSubsystem {
 	
 	public void adjustIntake(boolean button){
 		if(button){
-			intake.set(Value.kForward);
-		} else {
 			intake.set(Value.kReverse);
+		} else {
+			intake.set(Value.kForward);
 		}
 	}
 	

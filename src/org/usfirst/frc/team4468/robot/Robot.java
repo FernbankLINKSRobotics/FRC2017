@@ -27,6 +27,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("DB/String 1", "Gears Center");
 		SmartDashboard.putString("DB/String 2", "Gears Right");
 		SmartDashboard.putString("DB/String 3", "Break the Baseline");
+		
+		CMap.shift.autoShift("Low");
+		
 	}
 	
 	public void autonomousInit(){
@@ -73,7 +76,7 @@ public class Robot extends IterativeRobot {
 			//Drive Backward
 			CMap.leftDrive.set(-1);
 			CMap.rightDrive.set(-1);
-		} else if(Math.abs(CMap.leftStick.getY()) > 0){
+		} else if(Math.abs(CMap.leftStick.getY()) > 0 || Math.abs(CMap.rightStick.getY()) > 0){
 			CMap.leftDrive.set(-CMap.leftStick.getY());
 			CMap.rightDrive.set(-CMap.rightStick.getY());
 		} else {
@@ -111,8 +114,13 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testPeriodic(){
-		//System.out.println(CMap.leftEncoder.getRaw());
-		//System.out.println(CMap.rightEncoder.getRaw());
+		System.out.println(CMap.leftEncoder.getRaw());
+		System.out.println(CMap.rightEncoder.getRaw());
+		
+		//System.out.println(CMap.leftEncoder.getDistance());
+		//System.out.println(CMap.rightENdoer.getDistance());
+		
+		
 		//Gear.run(2);
 		//CMap.rightPID.getPIDController().setSetpoint(200);
 		//System.out.println(CMap.rightEncoder.getDistance());
