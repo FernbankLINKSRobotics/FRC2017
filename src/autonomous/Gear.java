@@ -21,7 +21,7 @@ public class Gear {
 	
 	
 	//DISTANCE TO LIFT FROM STARTING
-	static double distanceToLift = 30;
+	static double distanceToLift = 25;
 	static double angle;
 	
 	static double zeroGyroAngle = -999;
