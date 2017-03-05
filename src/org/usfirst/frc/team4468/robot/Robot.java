@@ -3,6 +3,7 @@ package org.usfirst.frc.team4468.robot;
 
 import autonomous.Baseline;
 import autonomous.Gear;
+import climber.ClimbSubsystem;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -88,7 +89,8 @@ public class Robot extends IterativeRobot {
 		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
 		//Climbing Code
-		CMap.climber.climb(CMap.rightStick.getRawButton(4)); //So, use getRawButton if you need to specifically
+		CMap.climber.climb(CMap.rightStick.getRawButton(5), CMap.rightStick.getRawButton(4)); //So, use getRawButton if you need to specifically
+		
 		
 		System.out.println(CMap.leftEncoder.getDistance());
 		

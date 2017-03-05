@@ -21,13 +21,19 @@ public class ClimbSubsystem {
 	
 	//According to Adam, the motor will have a mechanism
 	//built in that prevents it from moving backwards
-	public void climb(boolean button){
-		if(button){
+	public void climb(boolean button1, boolean button2){
+		if(button1){
 			climbMotor.set(-1);
 			climbMotor2.set(-1);
-		} else {
+		} else if(button2){
+			climbMotor.set(-0.5);
+			climbMotor2.set(-0.5);
+		}
+		else {
 			climbMotor.set(0);
 			climbMotor2.set(0);
 		}
+	}
+	
 	}
 }
