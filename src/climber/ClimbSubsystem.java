@@ -26,8 +26,8 @@ public class ClimbSubsystem {
 			climbMotor.set(-1);
 			climbMotor2.set(-1);
 		} else if(button2){
-			climbMotor.set(-0.5);
-			climbMotor2.set(-0.5);
+			climbMotor.set(-0.25);
+			climbMotor2.set(-0.25);
 		}
 		else {
 			climbMotor.set(0);
