@@ -71,18 +71,14 @@ public class Robot extends IterativeRobot {
 		//Comment to do Commit
 		if(CMap.leftStick.getRawButton(2)){
 			//Drive Forward
-			CMap.leftDrive.set(1);
-			CMap.rightDrive.set(1);
+			CMap.drive.set(1,1);
 		} else if(CMap.leftStick.getRawButton(3)){
 			//Drive Backward
-			CMap.leftDrive.set(-1);
-			CMap.rightDrive.set(-1);
+			CMap.drive.set(-1, -1);
 		} else if(Math.abs(CMap.leftStick.getY()) > 0 || Math.abs(CMap.rightStick.getY()) > 0){
-			CMap.leftDrive.set(-CMap.leftStick.getY());
-			CMap.rightDrive.set(-CMap.rightStick.getY());
+			CMap.drive.set(-CMap.leftStick.getY(), -CMap.rightStick.getY());
 		} else {
-			CMap.leftDrive.set(0);
-			CMap.rightDrive.set(0);
+			CMap.drive.set(0, 0);
 		}
 		
 		//Shifting Code

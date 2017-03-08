@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4468.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import drive.DriveTrain;
 import drive.GearShift;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -53,6 +55,7 @@ public class CMap {
 	//Drive Train Subsystems
 	public static LeftDriveTrain leftDrive;
 	public static RightDriveTrain rightDrive;
+	public static DriveTrain drive;
 	
 	//PID Subsystems
 	public static leftDrive leftPID;
@@ -84,6 +87,7 @@ public class CMap {
 		
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
 		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
+		drive= new DriveTrain(leftDrive, rightDrive);
 		
 		//Encoders
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
