@@ -6,8 +6,7 @@ public class Baseline {
 	public static void main() {
 		//7 ft 9.25 inches
 		//Actually, a little further to the area to get gears.
-		CMap.leftPID.setSetpoint(330);
-		CMap.rightPID.setSetpoint(330);
+		CMap.drive.PIDsetSetpoint(330, 330);
 		System.out.println("Baseline is initialized.");
 	}
 

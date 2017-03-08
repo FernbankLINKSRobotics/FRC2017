@@ -38,28 +38,12 @@ public class Gear {
 		}
 	}
 	
-	private static void PIDsetSetpoint(double leftPoint, double rightPoint){
-		CMap.leftPID.getPIDController().setSetpoint(leftPoint);
-		CMap.rightPID.getPIDController().setSetpoint(rightPoint);
-	}
-	
-	private static void PIDcontroller(boolean enable){
-		if(enable == true){
-			CMap.leftPID.getPIDController().enable();
-			CMap.rightPID.getPIDController().enable();
-		} else {
-			CMap.leftPID.getPIDController().disable();
-			CMap.rightPID.getPIDController().disable();
-		}
-	}
-	
 	public static void driveToSide(int side){
 		//System.out.println(CMap.leftPID.getPosition());
 		if(side == 1){
 			//Drive Forward
 			if(!initialStraight){
-				CMap.leftPID.getPIDController().setSetpoint(distanceToLift);
-				CMap.rightPID.getPIDController().setSetpoint(distanceToLift);
+				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
 				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
 					System.out.println("IM HERE");
 					initialStraight = true;
@@ -76,12 +60,12 @@ public class Gear {
 				}
 			//Drive Forward and Place Gear
 			} else {
-				PIDsetSetpoint(360, 270);
+				CMap.drive.PIDsetSetpoint(360, 270);
 			}
 		} else {//Drive Forward
 			System.out.println("FGYISGIGFIUHIUHUI");
 			if(!initialStraight){
-				PIDsetSetpoint(distanceToLift, distanceToLift);
+				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
 				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
 					System.out.println("IM HERE");
 					initialStraight = true;
@@ -98,7 +82,7 @@ public class Gear {
 				}
 			//Drive Forward and Place Gear
 			} else {
-				PIDsetSetpoint(270, 360);
+				CMap.drive.PIDsetSetpoint(270, 360);
 			}
 		}
 	}
