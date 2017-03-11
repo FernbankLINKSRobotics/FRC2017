@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("DB/String 3", "Break the Baseline");
 		
 		CMap.shift.autoShift("Low");
+		CMap.gears.adjustIntake(true);
 		
 	}
 	
@@ -106,9 +107,9 @@ public class Robot extends IterativeRobot {
 	
 	
 	//Use Test Mode to charge the compressor.
-	//Compressor compressor = new Compressor();
+	Compressor compressor = new Compressor();
 	public void testInit(){
-		//compressor.setClosedLoopControl(true);
+		compressor.start();
 	}
 	
 	public void testPeriodic(){
