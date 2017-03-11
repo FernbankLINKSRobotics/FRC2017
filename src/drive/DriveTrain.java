@@ -16,7 +16,7 @@ public class DriveTrain {
 		right.set(rightSet);
 	}
 	
-	private void PIDsetSetpoint(double leftPoint, double rightPoint){
+	public void PIDsetSetpoint(double leftPoint, double rightPoint){
 		CMap.leftPID.getPIDController().setSetpoint(leftPoint);
 		CMap.rightPID.getPIDController().setSetpoint(rightPoint);
 	}

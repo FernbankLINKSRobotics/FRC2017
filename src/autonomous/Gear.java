@@ -34,7 +34,7 @@ public class Gear {
 			driveToSide(position);
 			
 		} else if(position == 2){
-			PIDsetSetpoint(distanceToLift, distanceToLift);
+			CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
 		}
 	}
 	
