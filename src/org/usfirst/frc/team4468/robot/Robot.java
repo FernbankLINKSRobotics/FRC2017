@@ -91,7 +91,9 @@ public class Robot extends IterativeRobot {
 		System.out.println(CMap.leftEncoder.getDistance());
 		
 		//Gear Mechanism Code
-		CMap.gears.adjustIntake(CMap.rightStick.getTrigger());
+		//Button 1 is the Lift Intake
+		//Button 2 is the Motor Roller
+		CMap.gears.main(CMap.rightStick.getTrigger(), CMap.rightStick.getRawButton(2));
 		
 		/*
 		//Drive straight code
@@ -117,11 +119,8 @@ public class Robot extends IterativeRobot {
 		
 		//System.out.println(CMap.leftEncoder.getDistance());
 		//System.out.println(CMap.rightENdoer.getDistance());
-		
-		
-		//Gear.run(2);
-		//CMap.rightPID.getPIDController().setSetpoint(200);
-		//System.out.println(CMap.rightEncoder.getDistance());
+
+		System.out.println(CMap.rightEncoder.getDistance());
 	}
 	
 }

@@ -43,7 +43,8 @@ public class CMap {
 							rightMiddleDrive,
 							rightBottomDrive,
 						   climbMotor1,
-						   climbMotor2;
+						   climbMotor2,
+						   intakeMotor;
 	
 	//Joysticks
 	public static Joystick leftStick, rightStick;
@@ -80,6 +81,8 @@ public class CMap {
 		rightBottomDrive = new VictorSP(5);
 		climbMotor1 = new VictorSP(6);
 		climbMotor2 = new VictorSP(7);
+		intakeMotor = new VictorSP(8);
+		
 		//Invert Left Side of Motors to Make PIDs Easier
 		leftTopDrive.setInverted(true);
 		leftMiddleDrive.setInverted(true);
@@ -138,7 +141,7 @@ public class CMap {
 		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
 		shift = new GearShift(driveShift);
 		climber = new ClimbSubsystem(climbMotor1, climbMotor2);
-		gears = new GearSubsystem(gearMechanism);
+		gears = new GearSubsystem(intakeMotor, gearMechanism);
 		
 		server = CameraServer.getInstance();
 		server.startAutomaticCapture();
