@@ -21,8 +21,8 @@ public class Gear {
 	
 	
 	//DISTANCE TO LIFT FROM STARTING
-	static double distanceToLift = 24;
-	static final double rotation = 20;
+	static double distanceToLift = 30;
+	static final double rotation = 5;
 	static final double sideDistance = 20;
 	static double angle;
 	
@@ -55,6 +55,7 @@ public class Gear {
 			//Drive Forward
 			if(!initialStraight){
 				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
+				System.out.println(CMap.leftPID.getPosition());
 				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
 					System.out.println("IM HERE");
 					CMap.leftEncoder.reset();
@@ -84,19 +85,24 @@ public class Gear {
 				}
 			}
 		} else {//Drive Forward
-			System.out.println("FGYISGIGFIUHIUHUI");
 			if(!initialStraight){
 				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
+				System.out.println(CMap.leftPID.getSetpoint());
+				System.out.println(CMap.rightPID.getSetpoint());
+				System.out.println("FGYISGIGFIUHIUHUI");
 				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
 					System.out.println("IM HERE");
+					CMap.rightEncoder.reset();
 					initialStraight = true;
+					turnedToSide = false;
 					
 				}
 			//Gyro Turn, have vision correct error
 			} else if(!turnedToSide){
-				
-				CMap.drive.PIDsetSetpoint(distanceToLift - rotation, distanceToLift + rotation);
-				if(CMap.rightPID.getPosition() >= 30){
+				System.out.println("FHNDUIABNGFSNGFIUBNDSIUNIUFc");
+				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
+				System.out.println(CMap.rightPID.getPosition());
+				if(CMap.rightPID.getPosition() >= 24){
 					//turnedToSide = true;
 					System.out.println("IM HERE");
 					CMap.leftEncoder.reset();

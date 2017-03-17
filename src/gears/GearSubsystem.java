@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.VictorSP;
 
 public class GearSubsystem {
 	
-	public DoubleSolenoid intake = null;
+	public DoubleSolenoid intake = null,
+						  mainSolenoid = null;
 	public VictorSP motor = null;
 	
 	
@@ -19,26 +20,35 @@ public class GearSubsystem {
 	
 	
 
-	public GearSubsystem(VictorSP motorLift, DoubleSolenoid solenoid){
-		intake = solenoid;
+	public GearSubsystem(VictorSP motorLift, DoubleSolenoid solenoid, DoubleSolenoid liftSolenoid){
+		intake = liftSolenoid;
+		mainSolenoid = solenoid;
 		motor = motorLift;
 	}
 	
-	/* Expelling Gears
-	 * 
-	 * 1. Drop Gear
-	 * 2. Activate Rollers to turn in
-	 * 3. Pancake Cylinders activate to clamp
-	 */
-	public void main(boolean buttonForLift, boolean buttonForRoller){
-		liftIntake(buttonForLift);
-		spinRoller(buttonForRoller);
+	
+	
+	public void main(boolean buttonForIntake, boolean buttonForMain){
+		liftIntake(buttonForIntake);
+		if(buttonForIntake){
+			motor.set(1);
+		} else {
+			motor.set(0);
+		}
+		
+		if(buttonForMain){
+			mainSolenoid.set(Value.kForward);
+		} else {
+			mainSolenoid.set(Value.kReverse);
+		}
 		
 	}
 	
-	public void spinRoller(boolean button){
-		if(button){
+	public void spinRoller(boolean button1, boolean button2){
+		if(button1){
 			motor.set(1);
+		} else if(button2){
+			motor.set(-1);
 		} else {
 			motor.set(0);
 		}

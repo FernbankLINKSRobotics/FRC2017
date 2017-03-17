@@ -5,6 +5,7 @@ import autonomous.Baseline;
 import autonomous.Gear;
 import climber.ClimbSubsystem;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,12 +30,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("DB/String 2", "Gears Right");
 		SmartDashboard.putString("DB/String 3", "Break the Baseline");
 		
-		CMap.shift.autoShift("Low");
-		CMap.gears.adjustIntake(true);
 		
 	}
 	
 	public void autonomousInit(){
+		CMap.gearMechanism.set(Value.kForward);
 		//This will get the values from the Driver Station so we don't reflash code.
 		if(SmartDashboard.getBoolean("DB/Button 0", false)){
 			autonomous = 1; // Gears Left
@@ -112,16 +112,14 @@ public class Robot extends IterativeRobot {
 	Compressor compressor = new Compressor();
 	public void testInit(){
 		compressor.start();
+		
+		CMap.leftPID.getPIDController().disable();
+		CMap.rightPID.getPIDController().disable();
 	}
 	
 	public void testPeriodic(){
-		System.out.println(CMap.leftEncoder.getRaw());
-		System.out.println(CMap.rightEncoder.getRaw());
-		
-		//System.out.println(CMap.leftEncoder.getDistance());
-		//System.out.println(CMap.rightENdoer.getDistance());
-
-		System.out.println(CMap.rightEncoder.getDistance());
+		CMap.leftDrive.set(.5);
+		CMap.rightDrive.set(.6);
 	}
 	
 }

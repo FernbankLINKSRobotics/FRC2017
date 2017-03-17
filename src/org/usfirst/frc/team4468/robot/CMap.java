@@ -51,7 +51,8 @@ public class CMap {
 	
 	//Pnematics
 	public static DoubleSolenoid gearMechanism,
-								 driveShift;
+								 driveShift,
+								 gearIntake;
 	
 	//Drive Train Subsystems
 	public static LeftDriveTrain leftDrive;
@@ -115,6 +116,7 @@ public class CMap {
 		
 		gearMechanism = new DoubleSolenoid(4, 5);
 		driveShift = new DoubleSolenoid(6, 7);
+		gearIntake = new DoubleSolenoid(0, 1);
 		
 		
 		//Joysticks
@@ -141,7 +143,7 @@ public class CMap {
 		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
 		shift = new GearShift(driveShift);
 		climber = new ClimbSubsystem(climbMotor1, climbMotor2);
-		gears = new GearSubsystem(intakeMotor, gearMechanism);
+		gears = new GearSubsystem(intakeMotor, gearMechanism, gearIntake);
 		
 		server = CameraServer.getInstance();
 		server.startAutomaticCapture();
