@@ -118,8 +118,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testPeriodic(){
-		CMap.leftDrive.set(.5);
-		CMap.rightDrive.set(.6);
+		CMap.gears.motor.set(1);
 	}
 	
 }

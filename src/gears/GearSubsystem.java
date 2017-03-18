@@ -56,17 +56,9 @@ public class GearSubsystem {
 	
 	public void liftIntake(boolean button){
 		if(button){
-			if(!intakeButtonBeenPressed){
-				if(state == "Up"){
-					state = "Down";
-				} else {
-					state = "Up";
-				}
-			}
-			
-			intakeButtonBeenPressed = true;
+			state = "Down";
 		} else {
-			intakeButtonBeenPressed = false;
+			state = "Up";
 		}
 		
 		if(state == "Up"){
