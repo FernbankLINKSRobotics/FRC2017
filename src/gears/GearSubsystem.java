@@ -15,6 +15,7 @@ public class GearSubsystem {
 	
 	
 	
+	
 	private boolean intakeButtonBeenPressed = false;
 	private String state = "Up";
 	
@@ -25,18 +26,31 @@ public class GearSubsystem {
 		mainSolenoid = solenoid;
 		motor = motorLift;
 	}
+	//public VictorSP intakeMotor;
+	
+
+	public GearSubsystem(DoubleSolenoid solenoid){
+		intake = solenoid;
+		//intakeMotor = motor;
+
+	}
 	
 	
 	
 	public void main(boolean buttonForIntake, boolean buttonForMain){
+		boolean toggle= false;
 		liftIntake(buttonForIntake);
 		if(buttonForIntake){
 			motor.set(1);
 		} else {
 			motor.set(0);
 		}
+		if (buttonForMain) {
+			toggle = !toggle;
+		}
 		
-		if(buttonForMain){
+		
+		if(toggle){
 			mainSolenoid.set(Value.kForward);
 		} else {
 			mainSolenoid.set(Value.kReverse);
@@ -71,8 +85,10 @@ public class GearSubsystem {
 		
 		if(state == "Up"){
 			intake.set(Value.kReverse);
+			//intakeMotor.set(.5);
 		} else {
 			intake.set(Value.kForward);
+			//intakeMotor.set(0);
 		}
 	}
 	
