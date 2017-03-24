@@ -94,6 +94,7 @@ public class CMap {
 		drive= new DriveTrain(leftDrive, rightDrive);
 		
 		//Encoders
+		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
@@ -106,11 +107,11 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(lowDistancePerPulse);
-		
+		*/
 		
 	
-		//gyro = new AHRS(SerialPort.Port.kUSB1);
-		//gyro.reset();
+		gyro = new AHRS(SerialPort.Port.kUSB1);
+		gyro.reset();
 		
 		//Pnumatics
 		
@@ -124,19 +125,20 @@ public class CMap {
 		rightStick = new Joystick(1);
 		
 		//PID Subsystems
-		leftPID = new leftDrive();
-		rightPID = new rightDrive();
-		//turnController = new turnPID();
+		//leftPID = new leftDrive();
+		//rightPID = new rightDrive();
+
 		
-		leftPID.getPIDController().enable();
-		rightPID.getPIDController().enable();
+		//leftPID.getPIDController().enable();
+		//rightPID.getPIDController().enable();
 		
-		leftPID.getPIDController().setOutputRange(-.6, .6);
-		rightPID.getPIDController().setOutputRange(-.6, .6);
-		
+		//leftPID.getPIDController().setOutputRange(-.6, .6);
+		//rightPID.getPIDController().setOutputRange(-.6, .6);
 		//leftPID.getPIDController().setOutputRange(-.2, .2);
-		
-		//turnController.getPIDController().disable();
+
+		turnController.getPIDController().setOutputRange(-.6, .6);
+		turnController = new turnPID();
+		turnController.getPIDController().enable();
 		
 		//vision = new visionSubsystem("LINKSVision");
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);

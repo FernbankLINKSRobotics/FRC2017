@@ -27,7 +27,8 @@ public class leftDrive extends PIDSubsystem {
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
     	//System.out.println("LEFT ENCODER DISTANCE: " + CMap.leftEncoder.getDistance());
-    	return -CMap.leftEncoder.getDistance();
+    	//return -CMap.leftEncoder.getDistance();
+    	return 0;
     }
     
     protected void usePIDOutput(double output) {

@@ -109,16 +109,13 @@ public class Robot extends IterativeRobot {
 	
 	
 	//Use Test Mode to charge the compressor.
-	Compressor compressor = new Compressor();
+	//Compressor compressor = new Compressor();
 	public void testInit(){
-		compressor.start();
-		
-		CMap.leftPID.getPIDController().disable();
-		CMap.rightPID.getPIDController().disable();
+		CMap.turnController.getPIDController().setSetpoint(90);
 	}
 	
 	public void testPeriodic(){
-		CMap.gears.motor.set(1);
+		System.out.println(CMap.gyro.getAngle());
 	}
 	
 }
