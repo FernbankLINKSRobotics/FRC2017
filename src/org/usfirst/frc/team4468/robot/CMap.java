@@ -94,7 +94,6 @@ public class CMap {
 		drive= new DriveTrain(leftDrive, rightDrive);
 		
 		//Encoders
-		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
@@ -107,7 +106,6 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(lowDistancePerPulse);
-		*/
 		
 	
 		gyro = new AHRS(SerialPort.Port.kUSB1);

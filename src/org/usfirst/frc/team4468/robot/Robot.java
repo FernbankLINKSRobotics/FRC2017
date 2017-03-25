@@ -112,10 +112,14 @@ public class Robot extends IterativeRobot {
 	//Compressor compressor = new Compressor();
 	public void testInit(){
 		CMap.turnController.getPIDController().setSetpoint(90);
+		CMap.drive.angleTurn(90);
+		CMap.drive.angleTurn(-90);
+		
 	}
 	
 	public void testPeriodic(){
 		System.out.println(CMap.gyro.getAngle());
+
 	}
 	
 }

@@ -30,8 +30,8 @@ public class rightDrive extends PIDSubsystem {
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
     	//System.out.println("RIGHT ENCODER DISTANCE" + CMap.rightEncoder.getDistance());
-    	//return CMap.rightEncoder.getDistance();
-    	return 0;
+    	return CMap.rightEncoder.getDistance();
+    	//return 0;
     }
     
     protected void usePIDOutput(double output) {
