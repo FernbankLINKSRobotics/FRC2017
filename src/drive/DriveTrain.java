@@ -20,13 +20,4 @@ public class DriveTrain {
 		CMap.leftPID.getPIDController().setSetpoint(leftPoint);
 		CMap.rightPID.getPIDController().setSetpoint(rightPoint);
 	}
-	
-	public void angleTurn(double angle){
-		double neg = 1;
-		if(angle < 0){ neg = -1; }
-		while(angle < CMap.gyro.getAngle()){
-			left.set(neg * 0.1);
-			right.set(-neg * 0.1);
-		}
-	}
 }

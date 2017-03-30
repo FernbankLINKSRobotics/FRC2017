@@ -28,6 +28,8 @@ public class CMap {
 	public final static double highDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution /
     		highEncoderGearRatio/highGearRatio * 1;
 	
+	
+	public static double zeroGyroAngle;
 	//Encoders
 	public static Encoder leftEncoder,
 							rightEncoder;
@@ -80,9 +82,9 @@ public class CMap {
 		rightTopDrive = new VictorSP(3);
 		rightMiddleDrive = new VictorSP(4);
 		rightBottomDrive = new VictorSP(5);
-		climbMotor1 = new VictorSP(6);
-		climbMotor2 = new VictorSP(7);
-		intakeMotor = new VictorSP(8);
+		//climbMotor1 = new VictorSP(6);
+		//climbMotor2 = new VictorSP(7);
+		//intakeMotor = new VictorSP(8);
 		
 		//Invert Left Side of Motors to Make PIDs Easier
 		leftTopDrive.setInverted(true);
@@ -110,12 +112,14 @@ public class CMap {
 	
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
+		zeroGyroAngle = gyro.getAngle();
+	
 		
 		//Pnumatics
 		
-		gearMechanism = new DoubleSolenoid(4, 5);
-		driveShift = new DoubleSolenoid(6, 7);
-		gearIntake = new DoubleSolenoid(0, 1);
+		//gearMechanism = new DoubleSolenoid(4, 5);
+		//driveShift = new DoubleSolenoid(6, 7);
+		//gearIntake = new DoubleSolenoid(0, 1);
 		
 		
 		//Joysticks
@@ -123,20 +127,20 @@ public class CMap {
 		rightStick = new Joystick(1);
 		
 		//PID Subsystems
-		//leftPID = new leftDrive();
-		//rightPID = new rightDrive();
+		leftPID = new leftDrive();
+		rightPID = new rightDrive();
 
 		
-		//leftPID.getPIDController().enable();
-		//rightPID.getPIDController().enable();
+		leftPID.getPIDController().enable();
+		rightPID.getPIDController().enable();
 		
-		//leftPID.getPIDController().setOutputRange(-.6, .6);
-		//rightPID.getPIDController().setOutputRange(-.6, .6);
-		//leftPID.getPIDController().setOutputRange(-.2, .2);
+		leftPID.getPIDController().setOutputRange(-.6, .6);
+		rightPID.getPIDController().setOutputRange(-.6, .6);
+		
+		turnController = new turnPID();		
+		turnController.getPIDController().setOutputRange(-.2, .2);
 
-		turnController.getPIDController().setOutputRange(-.6, .6);
-		turnController = new turnPID();
-		turnController.getPIDController().enable();
+		//turnController.getPIDController().enable();
 		
 		//vision = new visionSubsystem("LINKSVision");
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);

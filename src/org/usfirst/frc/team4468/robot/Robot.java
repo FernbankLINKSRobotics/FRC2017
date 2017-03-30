@@ -30,11 +30,17 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("DB/String 2", "Gears Right");
 		SmartDashboard.putString("DB/String 3", "Break the Baseline");
 		
+
+		CMap.gyro.resetDisplacement();
+		CMap.gyro.reset();
+		CMap.gyro.zeroYaw();
+		
+		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
 	}
 	
 	public void autonomousInit(){
-		CMap.gearMechanism.set(Value.kForward);
+		//CMap.gearMechanism.set(Value.kForward);
 		//This will get the values from the Driver Station so we don't reflash code.
 		if(SmartDashboard.getBoolean("DB/Button 0", false)){
 			autonomous = 1; // Gears Left
@@ -83,10 +89,10 @@ public class Robot extends IterativeRobot {
 		}
 		
 		//Shifting Code
-		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
+		//CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
 		//Climbing Code
-		CMap.climber.climb(CMap.rightStick.getRawButton(4), CMap.rightStick.getRawButton(5)); //So, use getRawButton if you need to specifically
+		//CMap.climber.climb(CMap.rightStick.getRawButton(4), CMap.rightStick.getRawButton(5)); //So, use getRawButton if you need to specifically
 		
 		
 		System.out.println(CMap.leftEncoder.getDistance());
@@ -94,7 +100,7 @@ public class Robot extends IterativeRobot {
 		//Gear Mechanism Code
 		//Button 1 is the Lift Intake
 		//Button 2 is the Motor Roller
-		CMap.gears.main(CMap.rightStick.getTrigger(), CMap.rightStick.getRawButton(2));
+		//CMap.gears.main(CMap.rightStick.getTrigger(), CMap.rightStick.getRawButton(2));
 		
 		/*
 		//Drive straight code
@@ -106,20 +112,62 @@ public class Robot extends IterativeRobot {
 		
 	}
 	
-	
+	private Timer timer = new Timer();
 	
 	//Use Test Mode to charge the compressor.
 	//Compressor compressor = new Compressor();
 	public void testInit(){
-		CMap.turnController.getPIDController().setSetpoint(90);
-		CMap.drive.angleTurn(90);
-		CMap.drive.angleTurn(-90);
+		//CMap.turnController.getPIDController().setSetpoint(90);
+		//CMap.drive.angleTurn(90);
+		//CMap.drive.angleTurn(-90);
 		
+		CMap.zeroGyroAngle = CMap.gyro.getAngle();
+		
+		CMap.turnController.getPIDController().enable();
+		CMap.turnController.getPIDController().setSetpoint(-60);
+		
+		timer.start();
+		
+
 	}
 	
-	public void testPeriodic(){
-		System.out.println(CMap.gyro.getAngle());
+	private int factor = 0;
 
+	
+	public void testPeriodic(){
+		
+		//System.out.println(CMap.leftEncoder.get());
+		//System.out.println(CMap.rightEncoder.get());
+		
+		
+		/*
+		if(timer.get() < 1){
+		if(factor % 2 == 0 && factor < 10){
+		CMap.leftDrive.set(-1);
+		CMap.rightDrive.set(-.8);
+		} else{
+			CMap.leftDrive.set(-.8);
+			CMap.rightDrive.set(-1);
+			if(factor > 25)
+				factor = 0;
+		}
+		factor += 1;
+		} else if(timer.get() > 5){
+			System.out.println("GEUNHIUGDSHUIGDHUHGIUSH");
+			CMap.zeroGyroAngle = CMap.gyro.getAngle();
+			
+			CMap.turnController.getPIDController().enable();
+			CMap.turnController.getPIDController().setSetpoint(-60);
+		}
+		
+		System.out.println(timer.get());*/
+		
+		CMap.rightMiddleDrive.set(1);
+		
+		//System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
+		
+		//CMap.drive.PIDsetSetpoint(-30, -30);
+		//CMap.turnController.getPIDController().setSetpoint(60);
 	}
 	
 }

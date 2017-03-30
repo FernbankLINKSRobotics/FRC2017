@@ -64,8 +64,7 @@ public class Gear {
 				}
 			//Gyro Turn, have vision correct error
 			} else if(!turnedToSide){
-				
-				CMap.drive.PIDsetSetpoint(distanceToLift + rotation, distanceToLift - rotation);
+				CMap.turnController.getPIDController().setSetpoint(100);
 				if(CMap.leftPID.getPosition() >= 6){
 					//turnedToSide = true;
 					System.out.println("IM HERE");
