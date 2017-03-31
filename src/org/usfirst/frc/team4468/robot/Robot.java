@@ -158,16 +158,19 @@ public class Robot extends IterativeRobot {
 			
 			CMap.turnController.getPIDController().enable();
 			CMap.turnController.getPIDController().setSetpoint(-60);
-		}
+		}*/
+	
 		
-		System.out.println(timer.get());*/
+		//System.out.println(timer.get());
 		
-		CMap.rightMiddleDrive.set(1);
+		//CMap.rightDrive.set(1);
 		
 		//System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
 		
 		//CMap.drive.PIDsetSetpoint(-30, -30);
 		//CMap.turnController.getPIDController().setSetpoint(60);
+		
+		Gear.driveStraightToCenter();
 	}
 	
 }

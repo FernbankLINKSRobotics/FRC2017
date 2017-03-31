@@ -1,6 +1,7 @@
 package autonomous;
 import org.usfirst.frc.team4468.robot.*;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Gear {
@@ -13,105 +14,98 @@ public class Gear {
 	 * 4. Drop Gear
 	 */
 	
-	static boolean initialStraight = false;
-	static boolean turnedToSide = false;
-	static boolean drivenUp = false;
-	
-	static boolean visionCorrection = false;
-	
-	
 	//DISTANCE TO LIFT FROM STARTING
 	static double distanceToLift = 30;
-	static final double rotation = 5;
-	static final double sideDistance = 20;
-	static double angle;
+	
+	static boolean timerStarted = false;
 	
 	static double zeroGyroAngle = -999;
 	
-	Timer gearTimer = new Timer();
+	static Timer timer = new Timer();
 	
+	private static int stage = 1;
+	private static int factor = 0;
 	
 	public static void run(int position){
-		if(position == 1 || position == 3){
-			driveToSide(position);
-			
+		if(position == 1){
+			boilerAutonomous();
 		} else if(position == 2){
+			
+		} else if(position == 3){
+			
+		}
+	}
+	
+	public static void boilerAutonomous(){
+		if(stage == 1){
 			CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
-			System.out.println(CMap.leftPID.getPosition());
-			if (CMap.leftPID.getPosition() >= distanceToLift){
+			
+			if(CMap.leftEncoder.getDistance() >= distanceToLift - 1){
 				CMap.leftPID.getPIDController().disable();
 				CMap.rightPID.getPIDController().disable();
 				
-				CMap.drive.set(0.1, 0.1);
-			} else {
-				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
+				CMap.turnController.getPIDController().enable();
+				
+				stage = 2;
 			}
+		} else if(stage == 2){
+			CMap.turnController.getPIDController().setSetpoint(-60);
+			
+			if(checkTurn(CMap.turnController.getPosition())){
+				CMap.turnController.getPIDController().disable();
+				
+				CMap.leftEncoder.reset();
+				CMap.rightEncoder.reset();
+				
+				stage = 3;
+			}
+		} else if(stage == 3){
+			if(timer.get() < 1){
+				if(factor % 2 == 0 && factor < 10){
+					CMap.leftDrive.set(-1);
+					CMap.rightDrive.set(-.8);
+				} else{
+					CMap.leftDrive.set(-.8);
+					CMap.rightDrive.set(-1);
+					if(factor > 25)
+						factor = 0;
+					}
+			}
+			
+			factor += 1;
 		}
 	}
 	
-	public static void driveToSide(int side){
-		//System.out.println(CMap.leftPID.getPosition());
-		if(side == 1){
-			//Drive Forward
-			if(!initialStraight){
-				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
-				System.out.println(CMap.leftPID.getPosition());
-				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
-					System.out.println("IM HERE");
-					CMap.leftEncoder.reset();
-					initialStraight = true;
-					
-				}
-			//Gyro Turn, have vision correct error
-			} else if(!turnedToSide){
-				CMap.turnController.getPIDController().setSetpoint(100);
-				if(CMap.leftPID.getPosition() >= 6){
-					//turnedToSide = true;
-					System.out.println("IM HERE");
-					CMap.leftEncoder.reset();
-					CMap.rightEncoder.reset();
-					turnedToSide = true;
-				}
-			//Drive Forward and Place Gear
-			} else {
-				if(CMap.leftPID.getPosition() >= sideDistance){
-					CMap.leftPID.getPIDController().disable();
-					CMap.rightPID.getPIDController().disable();
-					
-					CMap.drive.set(0.1, 0.1);
-				} else {
-					CMap.drive.PIDsetSetpoint(sideDistance, sideDistance);
-				}
-			}
-		} else {//Drive Forward
-			if(!initialStraight){
-				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
-				System.out.println(CMap.leftPID.getSetpoint());
-				System.out.println(CMap.rightPID.getSetpoint());
-				System.out.println("FGYISGIGFIUHIUHUI");
-				if(CMap.leftPID.getPosition() >= distanceToLift - 1){
-					System.out.println("IM HERE");
-					CMap.rightEncoder.reset();
-					initialStraight = true;
-					turnedToSide = false;
-					
-				}
-			//Gyro Turn, have vision correct error
-			} else if(!turnedToSide){
-				System.out.println("FHNDUIABNGFSNGFIUBNDSIUNIUFc");
-				CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
-				System.out.println(CMap.rightPID.getPosition());
-				if(CMap.rightPID.getPosition() >= 24){
-					//turnedToSide = true;
-					System.out.println("IM HERE");
-					CMap.leftEncoder.reset();
-					CMap.rightEncoder.reset();
-					turnedToSide = true;
-				}
-			//Drive Forward and Place Gear
-			} else {
-				CMap.drive.PIDsetSetpoint(sideDistance, sideDistance);
-			}
+	//Are we at the angle?
+	public static boolean checkTurn(double angle){
+		if(59.5 < Math.abs(angle) && Math.abs(angle) < 60.5){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//Center Gear Auto
+	public static void driveStraightToCenter(){
+		if(!timerStarted){
+			timer.start();
+			CMap.zeroGyroAngle = CMap.gyro.getAngle();
+			timerStarted = true;
+		} else if(timer.get() < 1) {
+			double angle = CMap.gyro.getAngle() - CMap.zeroGyroAngle;
+			CMap.drive.drive(1, -angle);
+		}
+	}
+	
+	//Side Gear to Gear Peg
+	public static void driveToSideLift(){
+		if(!timerStarted){
+			timer.start();
+			timerStarted = true;
+		} else if(timer.get() < 1) {
+			double angle = CMap.gyro.getAngle() - 60 - CMap.zeroGyroAngle;
+			CMap.drive.drive(1, -angle);
 		}
 	}
 }
+
