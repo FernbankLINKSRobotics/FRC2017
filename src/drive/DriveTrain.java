@@ -24,12 +24,13 @@ public class DriveTrain {
 	//Method for Driving Straight
 	//curve < 0 means left
 	//curve > 0 means right
-	public void drive(double outputMagnitude, double curve){
+	public void drive(double outputMagnitude, double turn){
 		double m_sensitivity = 0.5;
 		
 		double leftOutput,
 			   rightOutput;
 		
+		double curve = turn * .1;
 		if (curve < 0) {
 		      double value = Math.log(-curve);
 		      double ratio = (value - m_sensitivity) / (value + m_sensitivity);
@@ -37,7 +38,7 @@ public class DriveTrain {
 		        ratio = .0000000001;
 		      }
 		      leftOutput = outputMagnitude / ratio;
-		      rightOutput = outputMagnitude/ratio;
+		      rightOutput = outputMagnitude;
 		} else if (curve > 0) {
 		      double value = Math.log(curve);
 		      double ratio = (value - m_sensitivity) / (value + m_sensitivity);

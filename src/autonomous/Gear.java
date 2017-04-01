@@ -91,9 +91,12 @@ public class Gear {
 			timer.start();
 			CMap.zeroGyroAngle = CMap.gyro.getAngle();
 			timerStarted = true;
-		} else if(timer.get() < 1) {
+		} else if(timer.get() < 10) {
 			double angle = CMap.gyro.getAngle() - CMap.zeroGyroAngle;
 			CMap.drive.drive(1, -angle);
+		} else {
+			CMap.leftDrive.set(1);
+			CMap.rightDrive.set(1);
 		}
 	}
 	
@@ -102,9 +105,12 @@ public class Gear {
 		if(!timerStarted){
 			timer.start();
 			timerStarted = true;
-		} else if(timer.get() < 1) {
-			double angle = CMap.gyro.getAngle() - 60 - CMap.zeroGyroAngle;
-			CMap.drive.drive(1, -angle);
+		} else if(timer.get() < 10) {
+			double angle = CMap.gyro.getAngle() + 60 - CMap.zeroGyroAngle;
+			CMap.drive.drive(.5, -angle);
+		} else {
+			CMap.leftDrive.set(1);
+			CMap.rightDrive.set(1);
 		}
 	}
 }
