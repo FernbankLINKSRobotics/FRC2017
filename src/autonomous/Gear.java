@@ -15,6 +15,8 @@ public class Gear {
 	 */
 	
 	//DISTANCE TO LIFT FROM STARTING
+	
+	static RobotDrive drive;
 	static double distanceToLift = 30;
 	
 	static boolean timerStarted = false;
@@ -90,13 +92,24 @@ public class Gear {
 		if(!timerStarted){
 			timer.start();
 			CMap.zeroGyroAngle = CMap.gyro.getAngle();
+			System.out.println("1");
 			timerStarted = true;
 		} else if(timer.get() < 10) {
 			double angle = CMap.gyro.getAngle() - CMap.zeroGyroAngle;
-			CMap.drive.drive(1, -angle);
-		} else {
-			CMap.leftDrive.set(1);
-			CMap.rightDrive.set(1);
+			//CMap.drive.drive(.2, -angle);
+			System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
+			
+			System.out.println("Angle: " + CMap.gyro.getAngle());
+			System.out.println("Zero Angle: " + CMap.zeroGyroAngle);
+			
+			if(CMap.gyro.getAngle() - CMap.zeroGyroAngle < 0){
+				System.out.println("False");
+				CMap.leftDrive.set(.5);
+				CMap.rightDrive.set(.2);
+			}else{
+				CMap.leftDrive.set(.2);
+				CMap.rightDrive.set(.4);
+			}
 		}
 	}
 	

@@ -138,7 +138,7 @@ public class CMap {
 		rightPID.getPIDController().setOutputRange(-.6, .6);
 		
 		turnController = new turnPID();		
-		turnController.getPIDController().setOutputRange(-.2, .2);
+		turnController.getPIDController().setOutputRange(-1, 1);
 
 		//turnController.getPIDController().enable();
 		

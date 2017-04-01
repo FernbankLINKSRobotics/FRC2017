@@ -6,6 +6,8 @@ public class DriveTrain {
 	LeftDriveTrain left;
 	RightDriveTrain right;
 	
+	
+	
 	public DriveTrain(LeftDriveTrain leftD, RightDriveTrain rightD){
 		left=leftD;
 		right=rightD;
@@ -51,5 +53,8 @@ public class DriveTrain {
 		      leftOutput = outputMagnitude;
 		      rightOutput = outputMagnitude;
 	 }
+		
+		CMap.leftDrive.set(leftOutput);
+		CMap.rightDrive.set(rightOutput);
 	}
 }

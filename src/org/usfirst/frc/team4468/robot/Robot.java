@@ -116,16 +116,18 @@ public class Robot extends IterativeRobot {
 	
 	//Use Test Mode to charge the compressor.
 	//Compressor compressor = new Compressor();
+	
+	private boolean turned = false;
 	public void testInit(){
 		//CMap.turnController.getPIDController().setSetpoint(90);
 		//CMap.drive.angleTurn(90);
 		//CMap.drive.angleTurn(-90);
-		
+		turned = false;
 		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
-		CMap.turnController.getPIDController().enable();
-		CMap.turnController.getPIDController().setSetpoint(-60);
-		
+		//CMap.turnController.getPIDController().enable();
+		//CMap.turnController.getPIDController().setSetpoint(-60);
+		timer.reset();
 		timer.start();
 		
 
@@ -165,12 +167,59 @@ public class Robot extends IterativeRobot {
 		
 		//CMap.rightDrive.set(1);
 		
-		//System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
+		System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
 		
 		//CMap.drive.PIDsetSetpoint(-30, -30);
 		//CMap.turnController.getPIDController().setSetpoint(60);
 		
-		Gear.driveStraightToCenter();
+		//Gear.driveStraightToCenter();
+		
+		//System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle)
+		PowerDistributionPanel pdp = new PowerDistributionPanel();
+		
+		double current15 = pdp.getCurrent(15);
+		double current14 = pdp.getCurrent(14);
+		double current0 = pdp.getCurrent(0);
+		
+		double voltage = 12.88;
+		double speed = voltage/pdp.getVoltage();
+		System.out.println(pdp.getVoltage());
+		
+		/*
+		System.out.println("Current 15:" + current15);
+		System.out.println("Current 14: " + current14);
+		System.out.println("Current 0:  " + current0);
+		*/
+		
+		if(timer.get() < 1.3 * speed){
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
+		} else if(timer.get() > 1.2 && timer.get() < 2.2) {
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
+		} else if(!turned){
+			CMap.turnController.getPIDController().enable();
+			CMap.turnController.getPIDController().setSetpoint(-60);
+	
+			
+			if(timer.get() > 4){
+				turned = true;
+				CMap.turnController.getPIDController().disable();
+			}
+		} else if(timer.get() < 7){
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
+		} else if(timer.get() < 7.5){
+			CMap.leftDrive.set(-.1);
+			CMap.rightDrive.set(-.1);
+		}
+		
+		/*
+		CMap.rightDrive.set(.6);
+		CMap.leftDrive.set(-.6);
+		*/
+		
+	
 	}
 	
 }
