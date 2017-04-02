@@ -16,17 +16,10 @@ import drive.RightDriveTrain;
 public class CMap { 
 	public final static double wheelDiameter = 4;
 	
-	//Need to find these values either through trial-and-error or complex math.
+	//Spin the Wheel, how many pulses are returned.
+	//Put that number in here.
 	public final static double pulsePerRevolution = 1800; //Low Gear
-	public final static double lowEncoderGearRatio = 15.32;
-	public final static double lowGearRatio = 15.32;
-	
-	public final static double highEncoderGearRatio = 4.17;
-	public final static double highGearRatio = 4.17;
-	
 	public final static double lowDistancePerPulse = (1/pulsePerRevolution) * Math.PI * wheelDiameter;
-	public final static double highDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution /
-    		highEncoderGearRatio/highGearRatio * 1;
 	
 	
 	public static double zeroGyroAngle;
@@ -100,7 +93,6 @@ public class CMap {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
 		
-		
 		leftEncoder.reset();
 		rightEncoder.reset();
 		
@@ -131,8 +123,8 @@ public class CMap {
 		rightPID = new rightDrive();
 
 		
-		leftPID.getPIDController().enable();
-		rightPID.getPIDController().enable();
+		leftPID.getPIDController().disable();
+		rightPID.getPIDController().disable();
 		
 		leftPID.getPIDController().setOutputRange(-.6, .6);
 		rightPID.getPIDController().setOutputRange(-.6, .6);
@@ -140,7 +132,7 @@ public class CMap {
 		turnController = new turnPID();		
 		turnController.getPIDController().setOutputRange(-1, 1);
 
-		//turnController.getPIDController().enable();
+		turnController.getPIDController().disable();
 		
 		//vision = new visionSubsystem("LINKSVision");
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
