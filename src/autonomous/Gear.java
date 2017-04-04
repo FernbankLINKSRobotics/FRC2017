@@ -1,45 +1,54 @@
 package autonomous;
 import org.usfirst.frc.team4468.robot.*;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Gear {
-	/*
-	 * STEPS IN AUTONOMOUS:
-	 * 
-	 * 1. Drive Straight
-	 * 2. Turn to angle if neccesary
-	 * 3. Drive Straight
-	 * 4. Drop Gear
-	 */
 	
-	//DISTANCE TO LIFT FROM STARTING
-	
-	static RobotDrive drive;
+	//INCHES
+	//DISTANCE TO LINE WHERE CENTER LIFT IS
 	static double distanceToLift = 30;
 	
+	//DEGREES
+	//COUNTERCLOCKWISE IS POSITIVE
+	//ANGLE OF LIFT PEG on Boiler Side
+	static double boilerAngle = -60;
+	
+	static boolean turned = false;
 	static boolean timerStarted = false;
 	
-	static double zeroGyroAngle = -999;
-	
-	static Timer timer = new Timer();
+	public static Timer timer = new Timer();
 	
 	private static int stage = 1;
-	private static int factor = 0;
 	
 	public static void run(int position){
 		if(position == 1){
-			boilerAutonomous();
-		} else if(position == 2){
+			//boilerAutonomous();
 			
+			timeLeft();
+		} else if(position == 2){
+			timeCenter();
 		} else if(position == 3){
+			timeRight();
+			
+			//CMap.leftPID.getPIDController().enable();
+			//CMap.rightPID.getPIDController().enable();
+			
+			//CMap.leftPID.setSetpoint(distanceToLift);
+			//CMap.rightPID.setSetpoint(distanceToLift);
 			
 		}
 	}
 	
 	public static void boilerAutonomous(){
+		System.out.println(CMap.leftEncoder.getDirection());
+		
 		if(stage == 1){
+			CMap.leftPID.getPIDController().enable();
+			CMap.rightPID.getPIDController().enable();
+			
 			CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
 			
 			if(CMap.leftEncoder.getDistance() >= distanceToLift - 1){
@@ -51,7 +60,7 @@ public class Gear {
 				stage = 2;
 			}
 		} else if(stage == 2){
-			CMap.turnController.getPIDController().setSetpoint(-60);
+			CMap.turnController.getPIDController().setSetpoint(boilerAngle);
 			
 			if(checkTurn(CMap.turnController.getPosition())){
 				CMap.turnController.getPIDController().disable();
@@ -59,22 +68,17 @@ public class Gear {
 				CMap.leftEncoder.reset();
 				CMap.rightEncoder.reset();
 				
+				timer.start();
+				
 				stage = 3;
 			}
-		} else if(stage == 3){
-			if(timer.get() < 1){
-				if(factor % 2 == 0 && factor < 10){
-					CMap.leftDrive.set(-1);
-					CMap.rightDrive.set(-.8);
-				} else{
-					CMap.leftDrive.set(-.8);
-					CMap.rightDrive.set(-1);
-					if(factor > 25)
-						factor = 0;
-					}
-			}
+		} else if(stage == 3 && timer.get() < 6){
 			
-			factor += 1;
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
+		} else {
+			CMap.leftDrive.set(-.1);
+			CMap.rightDrive.set(-.1);
 		}
 	}
 	
@@ -88,42 +92,90 @@ public class Gear {
 	}
 	
 	//Center Gear Auto
-	public static void driveStraightToCenter(){
-		if(!timerStarted){
-			timer.start();
-			CMap.zeroGyroAngle = CMap.gyro.getAngle();
-			System.out.println("1");
-			timerStarted = true;
-		} else if(timer.get() < 10) {
-			double angle = CMap.gyro.getAngle() - CMap.zeroGyroAngle;
-			//CMap.drive.drive(.2, -angle);
-			System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
-			
-			System.out.println("Angle: " + CMap.gyro.getAngle());
-			System.out.println("Zero Angle: " + CMap.zeroGyroAngle);
-			
-			if(CMap.gyro.getAngle() - CMap.zeroGyroAngle < 0){
-				System.out.println("False");
-				CMap.leftDrive.set(.5);
-				CMap.rightDrive.set(.2);
-			}else{
-				CMap.leftDrive.set(.2);
-				CMap.rightDrive.set(.4);
-			}
+	public static void timeCenter(){
+		double voltage = DriverStation.getInstance().getBatteryVoltage();
+		double ratio = 12.8/voltage;
+		
+		if (timer.get()<1.5) {
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
+		}
+		else if(timer.get() < 6){
+			CMap.turnController.getPIDController().enable();
+			CMap.turnController.getPIDController().setSetpoint(-10);
+		} else {
+			CMap.turnController.getPIDController().disable();
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
 		}
 	}
 	
-	//Side Gear to Gear Peg
-	public static void driveToSideLift(){
-		if(!timerStarted){
-			timer.start();
-			timerStarted = true;
-		} else if(timer.get() < 10) {
-			double angle = CMap.gyro.getAngle() + 60 - CMap.zeroGyroAngle;
-			CMap.drive.drive(.5, -angle);
-		} else {
-			CMap.leftDrive.set(1);
-			CMap.rightDrive.set(1);
+	
+	public static void timeLeft(){
+		double voltage = DriverStation.getInstance().getBatteryVoltage();
+		double ratio = 12.6/voltage;
+		
+		System.out.println(timer.get());
+		
+		if(timer.get() < 1.3){
+			CMap.leftDrive.set(.5 / ratio);
+			CMap.rightDrive.set(.5 / ratio);
+			
+			System.out.println(1);
+		} else if(timer.get() > 1.2 && timer.get() < 2.2) {
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
+			
+			System.out.println(2);
+		} else if(!turned){
+			CMap.turnController.getPIDController().enable();
+			CMap.turnController.getPIDController().setSetpoint(-60);
+			System.out.println(3);
+			
+			if(timer.get() > 4){
+				turned = true;
+				CMap.turnController.getPIDController().disable();
+			}
+		} else if(timer.get() < 7){
+			System.out.println(4);
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
+		} else if(timer.get() < 7.5){
+			CMap.leftDrive.set(-.1);
+			CMap.rightDrive.set(-.1);
+		}
+	}
+	
+	public static void timeRight(){
+		double voltage = DriverStation.getInstance().getBatteryVoltage();
+		double ratio = 12.6/voltage;
+		System.out.println(timer.get());
+		if(timer.get() < 1.3){
+			CMap.leftDrive.set(.5 / ratio);
+			CMap.rightDrive.set(.5 / ratio);
+			
+			System.out.println(1);
+		} else if(timer.get() > 1.2 && timer.get() < 2.2) {
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
+			
+			System.out.println(2);
+		} else if(!turned){
+			CMap.turnController.getPIDController().enable();
+			CMap.turnController.getPIDController().setSetpoint(60);
+			System.out.println(3);
+			
+			if(timer.get() > 4){
+				turned = true;
+				CMap.turnController.getPIDController().disable();
+			}
+		} else if(timer.get() < 7){
+			System.out.println(4);
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
+		} else if(timer.get() < 7.5){
+			CMap.leftDrive.set(-.1);
+			CMap.rightDrive.set(-.1);
 		}
 	}
 }

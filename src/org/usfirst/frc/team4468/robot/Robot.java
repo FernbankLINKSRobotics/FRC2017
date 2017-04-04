@@ -40,6 +40,19 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousInit(){
+		
+		CMap.leftPID.getPIDController().disable();
+		CMap.rightPID.getPIDController().disable();
+		CMap.turnController.getPIDController().disable();
+		
+		CMap.leftEncoder.reset();
+		CMap.rightEncoder.reset();
+		
+		CMap.zeroGyroAngle = CMap.gyro.getAngle();
+		
+		Gear.timer.reset();
+		Gear.timer.start();
+		
 		//CMap.gearMechanism.set(Value.kForward);
 		//This will get the values from the Driver Station so we don't reflash code.
 		if(SmartDashboard.getBoolean("DB/Button 0", false)){
@@ -71,6 +84,8 @@ public class Robot extends IterativeRobot {
 			
 			CMap.leftPID.getPIDController().disable();
 			CMap.rightPID.getPIDController().disable();
+			
+			CMap.turnController.getPIDController().disable();
 
 	}
 	
@@ -119,17 +134,13 @@ public class Robot extends IterativeRobot {
 	
 	private boolean turned = false;
 	public void testInit(){
-		//CMap.turnController.getPIDController().setSetpoint(90);
-		//CMap.drive.angleTurn(90);
-		//CMap.drive.angleTurn(-90);
-		turned = false;
 		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
-		//CMap.turnController.getPIDController().enable();
-		//CMap.turnController.getPIDController().setSetpoint(-60);
 		timer.reset();
 		timer.start();
 		
+		Gear.timer.reset();
+		Gear.timer.start();
 
 	}
 	
@@ -137,89 +148,8 @@ public class Robot extends IterativeRobot {
 
 	
 	public void testPeriodic(){
+		Gear.timeLeft();
 		
-		//System.out.println(CMap.leftEncoder.get());
-		//System.out.println(CMap.rightEncoder.get());
-		
-		
-		/*
-		if(timer.get() < 1){
-		if(factor % 2 == 0 && factor < 10){
-		CMap.leftDrive.set(-1);
-		CMap.rightDrive.set(-.8);
-		} else{
-			CMap.leftDrive.set(-.8);
-			CMap.rightDrive.set(-1);
-			if(factor > 25)
-				factor = 0;
-		}
-		factor += 1;
-		} else if(timer.get() > 5){
-			System.out.println("GEUNHIUGDSHUIGDHUHGIUSH");
-			CMap.zeroGyroAngle = CMap.gyro.getAngle();
-			
-			CMap.turnController.getPIDController().enable();
-			CMap.turnController.getPIDController().setSetpoint(-60);
-		}*/
-	
-		
-		//System.out.println(timer.get());
-		
-		//CMap.rightDrive.set(1);
-		
-		System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
-		
-		//CMap.drive.PIDsetSetpoint(-30, -30);
-		//CMap.turnController.getPIDController().setSetpoint(60);
-		
-		//Gear.driveStraightToCenter();
-		
-		//System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle)
-		PowerDistributionPanel pdp = new PowerDistributionPanel();
-		
-		double current15 = pdp.getCurrent(15);
-		double current14 = pdp.getCurrent(14);
-		double current0 = pdp.getCurrent(0);
-		
-		double voltage = 12.88;
-		double speed = voltage/pdp.getVoltage();
-		System.out.println(pdp.getVoltage());
-		
-		/*
-		System.out.println("Current 15:" + current15);
-		System.out.println("Current 14: " + current14);
-		System.out.println("Current 0:  " + current0);
-		*/
-		
-		if(timer.get() < 1.3 * speed){
-			CMap.leftDrive.set(.5);
-			CMap.rightDrive.set(.5);
-		} else if(timer.get() > 1.2 && timer.get() < 2.2) {
-			CMap.leftDrive.set(0);
-			CMap.rightDrive.set(0);
-		} else if(!turned){
-			CMap.turnController.getPIDController().enable();
-			CMap.turnController.getPIDController().setSetpoint(-60);
-	
-			
-			if(timer.get() > 4){
-				turned = true;
-				CMap.turnController.getPIDController().disable();
-			}
-		} else if(timer.get() < 7){
-			CMap.leftDrive.set(.5);
-			CMap.rightDrive.set(.5);
-		} else if(timer.get() < 7.5){
-			CMap.leftDrive.set(-.1);
-			CMap.rightDrive.set(-.1);
-		}
-		
-		/*
-		CMap.rightDrive.set(.6);
-		CMap.leftDrive.set(-.6);
-		*/
-		
-	
 	}
 	
 }
