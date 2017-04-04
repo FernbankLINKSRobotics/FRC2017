@@ -50,6 +50,9 @@ public class Robot extends IterativeRobot {
 		
 		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
+		Gear.timer.reset();
+		Gear.timer.start();
+		
 		//CMap.gearMechanism.set(Value.kForward);
 		//This will get the values from the Driver Station so we don't reflash code.
 		if(SmartDashboard.getBoolean("DB/Button 0", false)){
@@ -81,6 +84,8 @@ public class Robot extends IterativeRobot {
 			
 			CMap.leftPID.getPIDController().disable();
 			CMap.rightPID.getPIDController().disable();
+			
+			CMap.turnController.getPIDController().disable();
 
 	}
 	
@@ -129,17 +134,13 @@ public class Robot extends IterativeRobot {
 	
 	private boolean turned = false;
 	public void testInit(){
-		//CMap.turnController.getPIDController().setSetpoint(90);
-		//CMap.drive.angleTurn(90);
-		//CMap.drive.angleTurn(-90);
-		turned = false;
 		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
-		//CMap.turnController.getPIDController().enable();
-		//CMap.turnController.getPIDController().setSetpoint(-60);
 		timer.reset();
 		timer.start();
 		
+		Gear.timer.reset();
+		Gear.timer.start();
 
 	}
 	
@@ -147,9 +148,8 @@ public class Robot extends IterativeRobot {
 
 	
 	public void testPeriodic(){
-		System.out.println("Left: " + CMap.leftEncoder.get());
-		System.out.println("Right: " + CMap.rightEncoder.get());
-	
+		Gear.timeLeft();
+		
 	}
 	
 }
