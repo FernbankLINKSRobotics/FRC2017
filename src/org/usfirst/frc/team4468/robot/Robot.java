@@ -30,12 +30,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("DB/String 2", "Gears Right");
 		SmartDashboard.putString("DB/String 3", "Break the Baseline");
 		
-
-		CMap.gyro.resetDisplacement();
-		CMap.gyro.reset();
-		CMap.gyro.zeroYaw();
-		
-		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
 	}
 	
@@ -50,8 +44,8 @@ public class Robot extends IterativeRobot {
 		
 		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
-		Gear.timer.reset();
-		Gear.timer.start();
+		CMap.autoTimer.reset();
+		CMap.autoTimer.start();
 		
 		//CMap.gearMechanism.set(Value.kForward);
 		//This will get the values from the Driver Station so we don't reflash code.
@@ -86,6 +80,9 @@ public class Robot extends IterativeRobot {
 			CMap.rightPID.getPIDController().disable();
 			
 			CMap.turnController.getPIDController().disable();
+			
+			CMap.teleopTimer.reset();
+			CMap.teleopTimer.start();
 
 	}
 	
@@ -139,8 +136,8 @@ public class Robot extends IterativeRobot {
 		timer.reset();
 		timer.start();
 		
-		Gear.timer.reset();
-		Gear.timer.start();
+		CMap.autoTimer.reset();
+		CMap.autoTimer.start();
 
 	}
 	

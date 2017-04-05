@@ -1,8 +1,9 @@
 package autonomous;
+
 import org.usfirst.frc.team4468.robot.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotDrive;
+//import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Gear {
@@ -94,35 +95,29 @@ public class Gear {
 	//Center Gear Auto
 	public static void timeCenter(){
 		double voltage = DriverStation.getInstance().getBatteryVoltage();
-		double ratio = 12.8/voltage;
-		
-		if (timer.get()<1.5) {
-			CMap.leftDrive.set(.5);
-			CMap.rightDrive.set(.5);
-		}
-		else if(timer.get() < 6){
-			CMap.turnController.getPIDController().enable();
-			CMap.turnController.getPIDController().setSetpoint(-10);
+		double ratio = 12.9/voltage;
+		if (timer.get()<6 * ratio) {
+			CMap.leftDrive.set(.3);
+			CMap.rightDrive.set(.3);
 		} else {
-			CMap.turnController.getPIDController().disable();
-			CMap.leftDrive.set(.5);
-			CMap.rightDrive.set(.5);
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
 		}
 	}
 	
 	
 	public static void timeLeft(){
 		double voltage = DriverStation.getInstance().getBatteryVoltage();
-		double ratio = 12.6/voltage;
+		double ratio = 12.9/voltage*1.1;
 		
 		System.out.println(timer.get());
 		
-		if(timer.get() < 1.3){
-			CMap.leftDrive.set(.5 / ratio);
-			CMap.rightDrive.set(.5 / ratio);
+		if(timer.get() < .75*ratio){
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
 			
 			System.out.println(1);
-		} else if(timer.get() > 1.2 && timer.get() < 2.2) {
+		} else if(timer.get() > 1.2*ratio && timer.get() < 2.2) {
 			CMap.leftDrive.set(0);
 			CMap.rightDrive.set(0);
 			
@@ -141,41 +136,43 @@ public class Gear {
 			CMap.leftDrive.set(.5);
 			CMap.rightDrive.set(.5);
 		} else if(timer.get() < 7.5){
-			CMap.leftDrive.set(-.1);
-			CMap.rightDrive.set(-.1);
+			CMap.leftDrive.set(-.0);
+			CMap.rightDrive.set(-.0);
 		}
 	}
 	
 	public static void timeRight(){
 		double voltage = DriverStation.getInstance().getBatteryVoltage();
-		double ratio = 12.6/voltage;
+		double ratio = 12.9/voltage*1.1;
+		
 		System.out.println(timer.get());
-		if(timer.get() < 1.3){
-			CMap.leftDrive.set(.5 / ratio);
-			CMap.rightDrive.set(.5 / ratio);
+		
+		if(timer.get() < 1.3*ratio){
+			CMap.leftDrive.set(.5);
+			CMap.rightDrive.set(.5);
 			
 			System.out.println(1);
-		} else if(timer.get() > 1.2 && timer.get() < 2.2) {
+		} else if(timer.get() > 2*ratio && timer.get() < 3) {
 			CMap.leftDrive.set(0);
 			CMap.rightDrive.set(0);
 			
-			System.out.println(2);
+			System.out.println(2.5);
 		} else if(!turned){
 			CMap.turnController.getPIDController().enable();
 			CMap.turnController.getPIDController().setSetpoint(60);
 			System.out.println(3);
 			
-			if(timer.get() > 4){
+			if(timer.get() > 5){
 				turned = true;
 				CMap.turnController.getPIDController().disable();
 			}
 		} else if(timer.get() < 7){
 			System.out.println(4);
-			CMap.leftDrive.set(.5);
-			CMap.rightDrive.set(.5);
-		} else if(timer.get() < 7.5){
-			CMap.leftDrive.set(-.1);
-			CMap.rightDrive.set(-.1);
+			CMap.leftDrive.set(.4);
+			CMap.rightDrive.set(.4);
+		} else if(timer.get() < 9){
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
 		}
 	}
 }

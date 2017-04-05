@@ -27,6 +27,7 @@ public class CMap {
 	public static Encoder leftEncoder,
 							rightEncoder;
 	
+	
 	//Gyroscope
 	public static AHRS gyro;
 	
@@ -66,8 +67,16 @@ public class CMap {
 	public static ClimbSubsystem climber;
 	
 	public static CameraServer server;
+	
+	//Timers
+	public static Timer autoTimer;
+	public static Timer teleopTimer;
 
 	public static void initialize(){
+		//Timers
+		autoTimer = new Timer();
+		teleopTimer = new Timer();
+		
 		//Motors
 		leftTopDrive = new VictorSP(0);
 		leftMiddleDrive = new VictorSP(1);
