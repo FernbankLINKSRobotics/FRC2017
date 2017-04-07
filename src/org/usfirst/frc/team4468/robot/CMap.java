@@ -16,6 +16,8 @@ import drive.RightDriveTrain;
 public class CMap { 
 	public final static double wheelDiameter = 4;
 	
+	public static String wheelToControl = "Right";
+	
 	//Spin the Wheel, how many pulses are returned.
 	//Put that number in here.
 	public final static double pulsePerRevolution = 1800; //Low Gear
@@ -38,9 +40,9 @@ public class CMap {
 							rightTopDrive,
 							rightMiddleDrive,
 							rightBottomDrive,
-						   climbMotor1,
-						   climbMotor2,
-						   intakeMotor;
+						    climbMotor1,
+						    climbMotor2,
+						    intakeMotor;
 	
 	//Joysticks
 	public static Joystick leftStick, rightStick;
@@ -84,9 +86,9 @@ public class CMap {
 		rightTopDrive = new VictorSP(3);
 		rightMiddleDrive = new VictorSP(4);
 		rightBottomDrive = new VictorSP(5);
-		//climbMotor1 = new VictorSP(6);
-		//climbMotor2 = new VictorSP(7);
-		//intakeMotor = new VictorSP(8);
+		climbMotor1 = new VictorSP(6);
+		climbMotor2 = new VictorSP(7);
+		intakeMotor = new VictorSP(8);
 		
 		//Invert Left Side of Motors to Make PIDs Easier
 		leftTopDrive.setInverted(true);
@@ -98,6 +100,7 @@ public class CMap {
 		drive= new DriveTrain(leftDrive, rightDrive);
 		
 		//Encoders
+		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		
@@ -109,7 +112,7 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(lowDistancePerPulse);
-		
+		*/
 	
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
@@ -118,9 +121,9 @@ public class CMap {
 		
 		//Pnumatics
 		
-		//gearMechanism = new DoubleSolenoid(4, 5);
-		//driveShift = new DoubleSolenoid(6, 7);
-		//gearIntake = new DoubleSolenoid(0, 1);
+		gearMechanism = new DoubleSolenoid(4, 5);
+		driveShift = new DoubleSolenoid(6, 7);
+		gearIntake = new DoubleSolenoid(0, 1);
 		
 		
 		//Joysticks
@@ -150,8 +153,8 @@ public class CMap {
 		climber = new ClimbSubsystem(climbMotor1, climbMotor2);
 		gears = new GearSubsystem(intakeMotor, gearMechanism, gearIntake);
 		
-		server = CameraServer.getInstance();
-		server.startAutomaticCapture();
+		//server = CameraServer.getInstance();
+		//server.startAutomaticCapture();
 		
 		System.out.println("Robot is Initialized");
 	}

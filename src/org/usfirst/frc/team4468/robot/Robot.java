@@ -34,13 +34,8 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousInit(){
-		
-		CMap.leftPID.getPIDController().disable();
-		CMap.rightPID.getPIDController().disable();
 		CMap.turnController.getPIDController().disable();
-		
-		CMap.leftEncoder.reset();
-		CMap.rightEncoder.reset();
+		Gear.timer.start();
 		
 		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
@@ -73,8 +68,6 @@ public class Robot extends IterativeRobot {
 	public void teleopInit(){
 		//CMap.drive.disablePID(); //Disable the Left & Right Drive PIDs so they don't
 								 //interfere with the joysticks.
-			CMap.leftEncoder.reset();
-			CMap.rightEncoder.reset();
 			
 			CMap.leftPID.getPIDController().disable();
 			CMap.rightPID.getPIDController().disable();
@@ -101,18 +94,16 @@ public class Robot extends IterativeRobot {
 		}
 		
 		//Shifting Code
-		//CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
+		CMap.shift.main(CMap.leftStick.getTrigger()); //This is the button for the code
 		
 		//Climbing Code
-		//CMap.climber.climb(CMap.rightStick.getRawButton(4), CMap.rightStick.getRawButton(5)); //So, use getRawButton if you need to specifically
+		CMap.climber.climb(CMap.rightStick.getRawButton(4), CMap.rightStick.getRawButton(5)); //So, use getRawButton if you need to specifically
 		
-		
-		System.out.println(CMap.leftEncoder.getDistance());
 		
 		//Gear Mechanism Code
 		//Button 1 is the Lift Intake
 		//Button 2 is the Motor Roller
-		//CMap.gears.main(CMap.rightStick.getTrigger(), CMap.rightStick.getRawButton(2));
+		CMap.gears.main(CMap.rightStick.getTrigger(), CMap.rightStick.getRawButton(2));
 		
 		/*
 		//Drive straight code
@@ -145,8 +136,8 @@ public class Robot extends IterativeRobot {
 
 	
 	public void testPeriodic(){
-		Gear.timeLeft();
-		
+		CMap.turnController.enable();
+		CMap.turnController.getPIDController().setSetpoint(10);
 	}
 	
 }

@@ -17,6 +17,7 @@ public class GearSubsystem {
 	
 	
 	private boolean intakeButtonBeenPressed = false;
+	private boolean toggle = false;
 	private String state = "Up";
 	
 	
@@ -38,18 +39,31 @@ public class GearSubsystem {
 	
 	
 	public void main(boolean buttonForIntake, boolean buttonForMain){
-		boolean toggle= false;
 		liftIntake(buttonForIntake);
 		if(buttonForIntake){
 			motor.set(1);
 		} else {
 			motor.set(0);
 		}
-		if (buttonForMain) {
-			toggle = !toggle;
+		
+		if(buttonForMain){
+			if (!intakeButtonBeenPressed) {
+				System.out.println("Switch");
+				if(toggle == true){
+					toggle = false;
+				} else {
+					toggle = true;
+				}
+			}
+			
+			intakeButtonBeenPressed = true;
+		} else {
+			intakeButtonBeenPressed = false;
 		}
 		
 		
+		System.out.println(toggle);
+
 		if(toggle){
 			mainSolenoid.set(Value.kForward);
 		} else {

@@ -26,7 +26,7 @@ public class Gear {
 	
 	public static void run(int position){
 		if(position == 1){
-			//boilerAutonomous();
+			//leftEncoderAutonomous();
 			
 			timeLeft();
 		} else if(position == 2){
@@ -43,8 +43,8 @@ public class Gear {
 		}
 	}
 	
-	public static void boilerAutonomous(){
-		System.out.println(CMap.leftEncoder.getDirection());
+	public static void leftEncoderAutonomous(){
+		System.out.println(CMap.leftEncoder.getDistance());
 		
 		if(stage == 1){
 			CMap.leftPID.getPIDController().enable();
@@ -52,7 +52,7 @@ public class Gear {
 			
 			CMap.drive.PIDsetSetpoint(distanceToLift, distanceToLift);
 			
-			if(CMap.leftEncoder.getDistance() >= distanceToLift - 1){
+			if(CMap.leftEncoder.getDistance() >= distanceToLift - 2){
 				CMap.leftPID.getPIDController().disable();
 				CMap.rightPID.getPIDController().disable();
 				
@@ -63,14 +63,7 @@ public class Gear {
 		} else if(stage == 2){
 			CMap.turnController.getPIDController().setSetpoint(boilerAngle);
 			
-			if(checkTurn(CMap.turnController.getPosition())){
-				CMap.turnController.getPIDController().disable();
-				
-				CMap.leftEncoder.reset();
-				CMap.rightEncoder.reset();
-				
-				timer.start();
-				
+			if(CMap.autoTimer.get() > 4){
 				stage = 3;
 			}
 		} else if(stage == 3 && timer.get() < 6){
@@ -83,22 +76,20 @@ public class Gear {
 		}
 	}
 	
-	//Are we at the angle?
-	public static boolean checkTurn(double angle){
-		if(59.5 < Math.abs(angle) && Math.abs(angle) < 60.5){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
 	//Center Gear Auto
 	public static void timeCenter(){
 		double voltage = DriverStation.getInstance().getBatteryVoltage();
 		double ratio = 12.9/voltage;
-		if (timer.get()<6 * ratio) {
+		
+		if (timer.get()<1 * ratio) {
 			CMap.leftDrive.set(.3);
 			CMap.rightDrive.set(.3);
+		} else if(timer.get() < 2*ratio){
+			CMap.leftDrive.set(0);
+			CMap.rightDrive.set(0);
+		} else if(timer.get() < 9*ratio){
+			CMap.turnController.getPIDController().enable();
+			CMap.turnController.getPIDController().setSetpoint(-10);
 		} else {
 			CMap.leftDrive.set(0);
 			CMap.rightDrive.set(0);
@@ -112,7 +103,7 @@ public class Gear {
 		
 		System.out.println(timer.get());
 		
-		if(timer.get() < .75*ratio){
+		if(timer.get() < .8*ratio){
 			CMap.leftDrive.set(.5);
 			CMap.rightDrive.set(.5);
 			
@@ -145,7 +136,7 @@ public class Gear {
 		double voltage = DriverStation.getInstance().getBatteryVoltage();
 		double ratio = 12.9/voltage*1.1;
 		
-		System.out.println(timer.get());
+		System.out.println(1.3*ratio);
 		
 		if(timer.get() < 1.3*ratio){
 			CMap.leftDrive.set(.5);
@@ -155,7 +146,6 @@ public class Gear {
 		} else if(timer.get() > 2*ratio && timer.get() < 3) {
 			CMap.leftDrive.set(0);
 			CMap.rightDrive.set(0);
-			
 			System.out.println(2.5);
 		} else if(!turned){
 			CMap.turnController.getPIDController().enable();
