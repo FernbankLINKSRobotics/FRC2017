@@ -103,7 +103,7 @@ public class Gear {
 		
 		System.out.println(timer.get());
 		
-		if(timer.get() < .8*ratio){
+		if(timer.get() < .85*ratio){
 			CMap.leftDrive.set(.5);
 			CMap.rightDrive.set(.5);
 			
