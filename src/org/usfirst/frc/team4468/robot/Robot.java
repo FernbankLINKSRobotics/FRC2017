@@ -34,7 +34,15 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousInit(){
-		CMap.gearMechanism.set(Value.kForward);
+		CMap.turnController.getPIDController().disable();
+		Gear.timer.start();
+		
+		CMap.zeroGyroAngle = CMap.gyro.getAngle();
+		
+		CMap.autoTimer.reset();
+		CMap.autoTimer.start();
+		
+		//CMap.gearMechanism.set(Value.kForward);
 		//This will get the values from the Driver Station so we don't reflash code.
 		if(SmartDashboard.getBoolean("DB/Button 0", false)){
 			autonomous = 1; // Gears Left
@@ -60,11 +68,14 @@ public class Robot extends IterativeRobot {
 	public void teleopInit(){
 		//CMap.drive.disablePID(); //Disable the Left & Right Drive PIDs so they don't
 								 //interfere with the joysticks.
-			CMap.leftEncoder.reset();
-			CMap.rightEncoder.reset();
 			
 			CMap.leftPID.getPIDController().disable();
 			CMap.rightPID.getPIDController().disable();
+			
+			CMap.turnController.getPIDController().disable();
+			
+			CMap.teleopTimer.reset();
+			CMap.teleopTimer.start();
 
 	}
 	
@@ -89,8 +100,6 @@ public class Robot extends IterativeRobot {
 		CMap.climber.climb(CMap.rightStick.getRawButton(4), CMap.rightStick.getRawButton(5)); //So, use getRawButton if you need to specifically
 		
 		
-		System.out.println(CMap.leftEncoder.getDistance());
-		
 		//Gear Mechanism Code
 		//Button 1 is the Lift Intake
 		//Button 2 is the Motor Roller
@@ -106,20 +115,29 @@ public class Robot extends IterativeRobot {
 		
 	}
 	
-	
+	private Timer timer = new Timer();
 	
 	//Use Test Mode to charge the compressor.
 	//Compressor compressor = new Compressor();
+	
+	private boolean turned = false;
 	public void testInit(){
-		CMap.turnController.getPIDController().setSetpoint(90);
-		CMap.drive.angleTurn(90);
-		CMap.drive.angleTurn(-90);
+		CMap.zeroGyroAngle = CMap.gyro.getAngle();
 		
+		timer.reset();
+		timer.start();
+		
+		CMap.autoTimer.reset();
+		CMap.autoTimer.start();
+
 	}
 	
-	public void testPeriodic(){
-		System.out.println(CMap.gyro.getAngle());
+	private int factor = 0;
 
+	
+	public void testPeriodic(){
+		CMap.turnController.enable();
+		CMap.turnController.getPIDController().setSetpoint(10);
 	}
 	
 }

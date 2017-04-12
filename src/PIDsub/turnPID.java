@@ -6,7 +6,7 @@ import org.usfirst.frc.team4468.robot.*;
  *
  */
 public class turnPID extends PIDSubsystem {
-	private static final double Kp = .2;
+	private static final double Kp = .05;
 	private static final double Ki = 0;
 	private static final double Kd = 0;
     // Initialize your subsystem here
@@ -26,7 +26,9 @@ public class turnPID extends PIDSubsystem {
     protected double returnPIDInput() {
     	
     	//System.out.println(CMap.gyro.getAngle())
-    	return CMap.gyro.getAngle();
+    	
+    	System.out.println(CMap.gyro.getAngle() - CMap.zeroGyroAngle);
+    	return CMap.gyro.getAngle() - CMap.zeroGyroAngle;
     	
     	//return 0;
     }
@@ -35,7 +37,10 @@ public class turnPID extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
     	//CMap.drive.turnSet(output);
-    	CMap.rightDrive.set(output);
+    	
+    	System.out.println(output);
+    	//CMap.rightDrive.set(output);
+    	
     	CMap.leftDrive.set(-output);
     }
 }

@@ -16,21 +16,19 @@ import drive.RightDriveTrain;
 public class CMap { 
 	public final static double wheelDiameter = 4;
 	
-	//Need to find these values either through trial-and-error or complex math.
+	public static String wheelToControl = "Right";
+	
+	//Spin the Wheel, how many pulses are returned.
+	//Put that number in here.
 	public final static double pulsePerRevolution = 1800; //Low Gear
-	public final static double lowEncoderGearRatio = 15.32;
-	public final static double lowGearRatio = 15.32;
-	
-	public final static double highEncoderGearRatio = 4.17;
-	public final static double highGearRatio = 4.17;
-	
 	public final static double lowDistancePerPulse = (1/pulsePerRevolution) * Math.PI * wheelDiameter;
-	public final static double highDistancePerPulse = Math.PI*wheelDiameter/pulsePerRevolution /
-    		highEncoderGearRatio/highGearRatio * 1;
 	
+	
+	public static double zeroGyroAngle;
 	//Encoders
 	public static Encoder leftEncoder,
 							rightEncoder;
+	
 	
 	//Gyroscope
 	public static AHRS gyro;
@@ -42,9 +40,9 @@ public class CMap {
 							rightTopDrive,
 							rightMiddleDrive,
 							rightBottomDrive,
-						   climbMotor1,
-						   climbMotor2,
-						   intakeMotor;
+						    climbMotor1,
+						    climbMotor2,
+						    intakeMotor;
 	
 	//Joysticks
 	public static Joystick leftStick, rightStick;
@@ -71,8 +69,16 @@ public class CMap {
 	public static ClimbSubsystem climber;
 	
 	public static CameraServer server;
+	
+	//Timers
+	public static Timer autoTimer;
+	public static Timer teleopTimer;
 
 	public static void initialize(){
+		//Timers
+		autoTimer = new Timer();
+		teleopTimer = new Timer();
+		
 		//Motors
 		leftTopDrive = new VictorSP(0);
 		leftMiddleDrive = new VictorSP(1);
@@ -94,9 +100,9 @@ public class CMap {
 		drive= new DriveTrain(leftDrive, rightDrive);
 		
 		//Encoders
+		/*
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
-		
 		
 		
 		leftEncoder.reset();
@@ -106,10 +112,12 @@ public class CMap {
 		
 		leftEncoder.setDistancePerPulse(lowDistancePerPulse);
 		rightEncoder.setDistancePerPulse(lowDistancePerPulse);
-		
+		*/
 	
 		gyro = new AHRS(SerialPort.Port.kUSB1);
 		gyro.reset();
+		zeroGyroAngle = gyro.getAngle();
+	
 		
 		//Pnumatics
 		
@@ -123,20 +131,20 @@ public class CMap {
 		rightStick = new Joystick(1);
 		
 		//PID Subsystems
-		//leftPID = new leftDrive();
-		//rightPID = new rightDrive();
+		leftPID = new leftDrive();
+		rightPID = new rightDrive();
 
 		
-		//leftPID.getPIDController().enable();
-		//rightPID.getPIDController().enable();
+		leftPID.getPIDController().disable();
+		rightPID.getPIDController().disable();
 		
-		//leftPID.getPIDController().setOutputRange(-.6, .6);
-		//rightPID.getPIDController().setOutputRange(-.6, .6);
-		//leftPID.getPIDController().setOutputRange(-.2, .2);
+		leftPID.getPIDController().setOutputRange(-.6, .6);
+		rightPID.getPIDController().setOutputRange(-.6, .6);
+		
+		turnController = new turnPID();		
+		turnController.getPIDController().setOutputRange(-1, 1);
 
-		turnController.getPIDController().setOutputRange(-.6, .6);
-		turnController = new turnPID();
-		turnController.getPIDController().enable();
+		turnController.getPIDController().disable();
 		
 		//vision = new visionSubsystem("LINKSVision");
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
@@ -145,8 +153,8 @@ public class CMap {
 		climber = new ClimbSubsystem(climbMotor1, climbMotor2);
 		gears = new GearSubsystem(intakeMotor, gearMechanism, gearIntake);
 		
-		server = CameraServer.getInstance();
-		server.startAutomaticCapture();
+		//server = CameraServer.getInstance();
+		//server.startAutomaticCapture();
 		
 		System.out.println("Robot is Initialized");
 	}
