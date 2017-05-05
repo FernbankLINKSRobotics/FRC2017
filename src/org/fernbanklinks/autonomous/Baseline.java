@@ -1,4 +1,4 @@
-package autonomous;
+package org.fernbanklinks.autonomous;
 
 import org.fernbanklinks.main.CMap;
 
