@@ -1,13 +1,13 @@
-package gears;
+package org.fernbanklinks.subsystems;
 
-import org.usfirst.frc.team4468.robot.CMap;
+import org.fernbanklinks.main.CMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 
-public class GearSubsystem {
+public class GearManipulator {
 	
 	public DoubleSolenoid intake = null,
 						  mainSolenoid = null;
@@ -22,7 +22,7 @@ public class GearSubsystem {
 	
 	
 
-	public GearSubsystem(VictorSP motorLift, DoubleSolenoid solenoid, DoubleSolenoid liftSolenoid){
+	public GearManipulator(VictorSP motorLift, DoubleSolenoid solenoid, DoubleSolenoid liftSolenoid){
 		intake = liftSolenoid;
 		mainSolenoid = solenoid;
 		motor = motorLift;
@@ -30,7 +30,7 @@ public class GearSubsystem {
 	//public VictorSP intakeMotor;
 	
 
-	public GearSubsystem(DoubleSolenoid solenoid){
+	public GearManipulator(DoubleSolenoid solenoid){
 		intake = solenoid;
 		//intakeMotor = motor;
 

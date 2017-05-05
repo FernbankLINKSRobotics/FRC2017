@@ -1,16 +1,17 @@
 package PIDsub;
 
+import org.fernbanklinks.main.*;
+
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import org.usfirst.frc.team4468.robot.*;
 /**
  *
  */
-public class turnPID extends PIDSubsystem {
+public class TurnController extends PIDSubsystem {
 	private static final double Kp = .05;
 	private static final double Ki = 0;
 	private static final double Kd = 0;
     // Initialize your subsystem here
-    public turnPID() {
+    public TurnController() {
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -18,10 +19,6 @@ public class turnPID extends PIDSubsystem {
     	super("turnPID", Kp, Ki, Kd);
     }
     
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
     
     protected double returnPIDInput() {
     	
@@ -43,4 +40,11 @@ public class turnPID extends PIDSubsystem {
     	
     	CMap.leftDrive.set(-output);
     }
+
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,15 +1,14 @@
-package org.usfirst.frc.team4468.robot;
+package org.fernbanklinks.main;
+
+import org.fernbanklinks.helper.MotorArray;
+import org.fernbanklinks.subsystems.*;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import drive.DriveTrain;
 import drive.GearShift;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import gears.GearSubsystem;
-import vision.visionSubsystem;
 import PIDsub.*;
-import climber.ClimbSubsystem;
 import drive.LeftDriveTrain;
 import drive.RightDriveTrain;
 
@@ -57,16 +56,21 @@ public class CMap {
 	public static RightDriveTrain rightDrive;
 	public static DriveTrain drive;
 	
+	public static MotorArray leftDriveArray;
+	public static MotorArray rightDriveArray;
+	
+	public static Object[] leftMotors = {leftTopDrive, leftMiddleDrive, leftBottomDrive};
+	public static Object[] rightMotors = {rightTopDrive, rightMiddleDrive, rightBottomDrive};
+	
 	//PID Subsystems
 	public static leftDrive leftPID;
 	public static rightDrive rightPID;
-	public static turnPID turnController;
+	public static TurnController turnController;
 	
 	//Regular Subsystems
-	public static visionSubsystem vision;
-	public static GearSubsystem gears;
+	public static GearManipulator gears;
 	public static GearShift shift;
-	public static ClimbSubsystem climber;
+	public static Climber climber;
 	
 	public static CameraServer server;
 	
@@ -95,9 +99,9 @@ public class CMap {
 		leftMiddleDrive.setInverted(true);
 		leftBottomDrive.setInverted(true);
 		
-		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
-		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
-		drive= new DriveTrain(leftDrive, rightDrive);
+		leftDriveArray = new MotorArray(leftMotors);
+		rightDriveArray = new MotorArray(rightMotors);
+		drive= new DriveTrain(leftDriveArray, rightDriveArray, gyro, null, null);
 		
 		//Encoders
 		/*
@@ -141,7 +145,7 @@ public class CMap {
 		leftPID.getPIDController().setOutputRange(-.6, .6);
 		rightPID.getPIDController().setOutputRange(-.6, .6);
 		
-		turnController = new turnPID();		
+		turnController = new TurnController();		
 		turnController.getPIDController().setOutputRange(-1, 1);
 
 		turnController.getPIDController().disable();
@@ -150,8 +154,8 @@ public class CMap {
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
 		rightDrive = new RightDriveTrain(rightTopDrive, rightMiddleDrive, rightBottomDrive);
 		shift = new GearShift(driveShift);
-		climber = new ClimbSubsystem(climbMotor1, climbMotor2);
-		gears = new GearSubsystem(intakeMotor, gearMechanism, gearIntake);
+		climber = new Climber(climbMotor1, climbMotor2);
+		gears = new GearManipulator(intakeMotor, gearMechanism, gearIntake);
 		
 		//server = CameraServer.getInstance();
 		//server.startAutomaticCapture();

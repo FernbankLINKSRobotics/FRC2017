@@ -1,6 +1,6 @@
-package climber;
+package org.fernbanklinks.subsystems;
 
-import org.usfirst.frc.team4468.robot.CMap;
+import org.fernbanklinks.main.CMap;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Relay;
@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Relay.Value;
 
-public class ClimbSubsystem {
+public class Climber {
 	public VictorSP climbMotor, climbMotor2;
 	
 	private boolean climbing;
 	
-	public ClimbSubsystem(VictorSP motor, VictorSP motor2){
+	public Climber(VictorSP motor, VictorSP motor2){
 		climbMotor = motor;
 		climbMotor2 = motor2;
 	}
