@@ -1,10 +1,10 @@
 
 package org.fernbanklinks.main;
 
+import org.fernbanklinks.autonomous.Baseline;
+import org.fernbanklinks.autonomous.Gear;
 import org.fernbanklinks.subsystems.Climber;
 
-import autonomous.Baseline;
-import autonomous.Gear;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;

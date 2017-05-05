@@ -54,7 +54,10 @@ public class DriveTrain implements PIDOutput{
 			gyro = new GyroPIDSource(navx);
 			
 			turnController = new PIDController(.05, 0, 0, gyro, this);
+			
 			turnController.disable();
+			
+			turnController.setOutputRange(-.6, .6);
 		}
 		
 		if(leftDriveEncoder != null && rightDriveEncoder != null){
@@ -63,6 +66,12 @@ public class DriveTrain implements PIDOutput{
 			
 			leftPIDController = new PIDController(0.2, 0, 0, leftEncoder, leftDriveTrain);
 			rightPIDController = new PIDController(0.2, 0, 0, rightEncoder, rightDriveTrain);
+			
+			leftPIDController.disable();
+			rightPIDController.disable();
+			
+			leftPIDController.setOutputRange(-.6, .6);
+			rightPIDController.setOutputRange(-.6, .6);
 		}
 	}
 	

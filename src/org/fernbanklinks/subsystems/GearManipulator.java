@@ -14,7 +14,7 @@ public class GearManipulator {
 	public VictorSP motor = null;
 	
 	
-	
+	public String[] states = {"Open", "Closed"};
 	
 	private boolean intakeButtonBeenPressed = false;
 	private boolean toggle = false;

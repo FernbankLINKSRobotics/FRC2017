@@ -28,8 +28,7 @@ public class Climber {
 		} else if(button2){
 			climbMotor.set(-0.25);
 			climbMotor2.set(-0.25);
-		}
-		else {
+		} else {
 			climbMotor.set(0);
 			climbMotor2.set(0);
 		}

@@ -5,10 +5,8 @@ import org.fernbanklinks.subsystems.*;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import drive.GearShift;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import PIDsub.*;
 import drive.LeftDriveTrain;
 import drive.RightDriveTrain;
 
@@ -62,10 +60,6 @@ public class CMap {
 	public static Object[] leftMotors = {leftTopDrive, leftMiddleDrive, leftBottomDrive};
 	public static Object[] rightMotors = {rightTopDrive, rightMiddleDrive, rightBottomDrive};
 	
-	//PID Subsystems
-	public static leftDrive leftPID;
-	public static rightDrive rightPID;
-	public static TurnController turnController;
 	
 	//Regular Subsystems
 	public static GearManipulator gears;
@@ -134,21 +128,6 @@ public class CMap {
 		leftStick = new Joystick(0);
 		rightStick = new Joystick(1);
 		
-		//PID Subsystems
-		leftPID = new leftDrive();
-		rightPID = new rightDrive();
-
-		
-		leftPID.getPIDController().disable();
-		rightPID.getPIDController().disable();
-		
-		leftPID.getPIDController().setOutputRange(-.6, .6);
-		rightPID.getPIDController().setOutputRange(-.6, .6);
-		
-		turnController = new TurnController();		
-		turnController.getPIDController().setOutputRange(-1, 1);
-
-		turnController.getPIDController().disable();
 		
 		//vision = new visionSubsystem("LINKSVision");
 		leftDrive = new LeftDriveTrain(leftTopDrive, leftMiddleDrive, leftBottomDrive);
